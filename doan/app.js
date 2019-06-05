@@ -4,47 +4,46 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var hbs_section = require('express-handlebars-sections');
-
-
-
+var moment = require('moment');
 var config = require('./config/database');
 mongoose.set('useCreateIndex', true);
 mongoose.connect(config.database, { useNewUrlParser: true }).then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(`Connect fail!!!! with error: ${err}`));
-
 
 var app = express();
 app.use(morgan('dev'));
 
 require('./middlewares/session')(app);
 require('./middlewares/passport')(app);
+require('./middlewares/upload')(app);
 
+app.get('/XD',(req,res)=>{
+    res.render('XD');
+})
 
 app.use(require('./middlewares/auth.mdw'));
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
-
-
-app.engine('.hbs',exphdb({
-    defaultLayout:'main',
-    extname:'.hbs',
+app.engine('hbs',exphdb({
+    layoutsDir: 'views/layouts',
+    defaultLayout: 'main.hbs',
     helpers: {
-        section: hbs_section()
+        section: hbs_section(),
+        moment: moment()
     }
 }));
-app.set('view engine','.hbs');
+app.set('view engine','hbs');
 
 app.use(express.json());
 app.use('/public',express.static('public'));
 
-app.get('/', (req,res)=>{
-    res.render('dashboard');
-});
+var indexRouter = require('./routes/index');
+app.use('/', indexRouter);
 
-var indexRouter = require('./routes/Users');
-app.use('/user', indexRouter);
+var userRouter = require('./routes/Users');
+app.use('/user', userRouter);
 
 
 

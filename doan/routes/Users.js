@@ -33,16 +33,17 @@ routes.get('/regist', (req, res, next) => {
 
 routes.post('/regist', (req, res, next) => {
     var user = new Users({
-        userName: req.body.userName,
+        userName: req.body.f_Username,
         email: req.body.email,
         password: req.body.password,
+        name: req.body.f_Name
     });
     Users.addUser(user, (err,usCallback)=>{
         if(err){
-            
+            throw err;
         }
     });
-    res.render('regist');
+    res.redirect('login');
 })
 
 routes.get('/profile', restricted, (req, res, next) => {

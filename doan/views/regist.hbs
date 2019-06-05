@@ -1,38 +1,72 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
 {{#section 'js'}}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
     $(function () {
-        $.('#registerForm').validate({
+        $('#registerForm').validate({
+            onkeyup: false,
             rules: {
-                userName: {
+                f_Username: {
+                    required: true,
+                    //remote: {
+                        //url: '/account/is-available',
+                        //data: {
+                            //user: function () {
+                                //return $('#txtUsername').val();
+                            //}
+                        //}
+                    //}
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                confirm: {
+                    required: true,
+                    equalTo: $('[name="password"]')
+                },
+                f_Name: {
                     required: true,
                 },
-                email: {
+                f_Email: {
                     required: true,
                     email: true
                 },
-                password: {
+                dob: {
                     required: true,
+                    // validDate: true
                 },
-                enterPassword: {
-                    required: true,
-                    equalTo: $('[name="password"]'),
-                },
-
             },
-            message: {
-                userName: {
+            messages: {
+                f_Username: {
                     required: 'Your username is required.',
-                },
-                email: {
-                    required: 'Please enter a valid email address.',
-                    email: 'Please enter a valid email address.'
+                    //remote: 'Your username has been taken, please take another.'
                 },
                 password: {
                     required: 'Your password is required.',
-                }, password: {
+                    minlength: 'Your password must have at least 6 characters.'
+                },
+                confirm: {
                     required: 'Your password does not match.',
-                    equalTo: 'Your password does not match.',
+                    equalTo: 'Your password does not match.'
+                },
+                f_Name: {
+                    required: 'Valid full name is required.',
+                },
+                f_Email: {
+                    required: 'Please enter a valid email address.',
+                    email: 'Please enter a valid email address.'
+                },
+                dob: {
+                    required: 'Valid date of birth is required.',
+                    // validDate: 'Please enter a valid date in the format DD/MM/YYYY'
                 },
             },
             errorElement: 'small',
@@ -44,89 +78,58 @@
             unhighlight: function (e) {
                 $(e).removeClass('is-invalid').addClass('is-valid');
             },
-
         });
     })
 </script>
 {{/section}}
+
 <div class="container h-100">
-    <div class="row h-100 align-items-center">
-        <div class="col-3">
+    <div class="row h-100">
+        <div class="col-2">
         </div>
-        <div class="col p-auto">
-            <div class="shadow-lg bg-white rounded">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="text-center">
-                            <h4>ĐĂNG KÍ TÀI KHOẢN</h4>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <form novalidate action="" method="POST" id="registerForm">
+                        <h5 class="card-header">
+                            Register
+                        </h5>
+                        <div class="card-body">
+                            <h5 class="mb-3">Account</h5>
+                            <div class="form-group">
+                                <label for="txtUsername">Username</label>
+                                <input type="text" class="form-control" id="txtUsername" name="f_Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtPassword">Password</label>
+                                <input type="password" class="form-control" id="txtPassword" name="password">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtConfirm">Confirm</label>
+                                <input type="password" class="form-control" id="txtConfirm" name="confirm">
+                            </div>
+
+                            <hr class="mb-4">
+                            <h5 class="mb-3">Information</h5>
+                            <div class="form-group">
+                                <label for="txtName">Name</label>
+                                <input type="text" class="form-control" id="txtName" name="f_Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtEmail">Email</label>
+                                <input type="text" class="form-control" id="txtEmail" name="f_Email">
+                            </div>
                         </div>
-                        <div class="text-left">
-                            <form novalidate id="registerForm" action="" name="registerForm" method="POST">
-                                <div class="form-group">
-                                    <label>User Name</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="far fa-user"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" class="form-control" id="userName" name="userName"
-                                            placeholder="Username">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <i class="fas fa-envelope"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Email" name="email"
-                                            id="email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="pw">
-                                                <i class="fas fa-key"></i>
-                                            </span>
-                                        </div>
-                                        <input type="password" class="form-control" placeholder="Password" id="password"
-                                            name="password">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Enter password</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="pw">
-                                                <i class="fas fa-key"></i>
-                                            </span>
-                                        </div>
-                                        <input type="password" class="form-control" placeholder="Enter password"
-                                            name="enterPassword" id="enterPassword">
-                                    </div>
-                                </div>
-                                <div class="text-right m-auto">
-                                    <a href="login" class="btn btn-outline-secondary p-2 mr-2">
-                                        <i class="fas fa-sign-in-alt"></i>
-                                        Quay về đăng nhập
-                                    </a>
-                                    <button type="submit" class="btn btn-outline-success p-2" id="Regist">
-                                        <i class="fas fa-user-plus"></i>
-                                        Đăng kí
-                                    </button>
-                                </div>
-                            </form>
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-lg btn-success btn-block">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                Register
+                            </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-
         </div>
-        <div class="col-3"></div>
+        <div class="col-2"></div>
     </div>
 </div>
