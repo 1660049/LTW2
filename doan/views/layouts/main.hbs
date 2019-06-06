@@ -75,8 +75,11 @@
                         <i class="fas fa-user"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="/user/profile">Profile</a>
-                        <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">Log Out</a>
+                        <a class="dropdown-item" href="/user/profile">Cá nhân</a>
+                        {{#if writer}}
+                        <a class="dropdown-item" href="/user/uppost">Thêm bài viết</a>
+                        {{/if}}
+                        <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">Đăng xuất</a>
                     </div>
                 </div>
                 {{else}}

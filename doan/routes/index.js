@@ -29,7 +29,8 @@ routes.get('/demo', (req, res, next) => {
     res.render('demo');
 })
 
-routes.get('/uppost', restricted, (req, res, next) => {
-    res.render('uppost');
+
+routes.get('/roleError',(req,res,next)=>{
+    res.render('roleError');
 })
 module.exports = routes;
