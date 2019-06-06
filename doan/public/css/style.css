@@ -171,10 +171,12 @@ a {
     opacity: 0.9;
 }
 .post-meta .post-category.cat-1 {
-    background-color: #4BB92F;
+    background-color: #4bb92f;
+    
 }
 .post-meta .post-category.cat-2 {
     background-color: #ff8700;
+
 }
 .post-meta .post-category.cat-3 {
     background-color: #8d00ff;
