@@ -9,7 +9,7 @@ routes.get('/', (req, res, next) => {
     postModel.find((err, docs) => {
         if (err) return err;
         var postChunks = [];
-        var chunkSize = 3;
+        var chunkSize = 2;
         for (var i = 0; i < docs.length; i += chunkSize) {
             docs.ngayDang = moment(docs.ngayDang, "YYYY-MM-DD h:i:s").format("DD/MM/YYYY");
             postChunks.push(docs.slice(i, i + chunkSize));
@@ -21,6 +21,7 @@ routes.get('/', (req, res, next) => {
 routes.get('/post/:id', (req, res, next) => {
     var id = req.params.id;
     postModel.findById(id, (err, docs) => {
+        if(err) return res.json({error: err.message});
         res.render('post', { post: docs });
     });
 })

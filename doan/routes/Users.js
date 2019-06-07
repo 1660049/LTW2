@@ -41,7 +41,7 @@ routes.post('/regist', (req, res, next) => {
     });
     Users.addUser(user, (err, usCallback) => {
         if (err) {
-            return next(err);
+            return res.json({error: err.message});
         }
     });
     res.redirect('login');

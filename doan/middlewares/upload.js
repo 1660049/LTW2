@@ -20,8 +20,6 @@ module.exports = function (app) {
           error: err.message
         })
       }
-      console.log(req.body);
-      
       var newPost = new postUser({
         img: '/public/img/' + req.file.filename,
         tieuDe: req.body.tieuDe,
@@ -35,7 +33,7 @@ module.exports = function (app) {
         views: 0,
       });
       postUser.addPost(newPost,(err,post)=>{
-        if(err) throw err;
+        if(err) return res.json({error: err.message});
         console.log(post);
       });
       res.redirect('/');
