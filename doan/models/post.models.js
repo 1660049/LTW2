@@ -13,14 +13,29 @@ var postSchema = mongoose.Schema({
     views: Number,
 })
 
+
 var post = module.exports = mongoose.model('post', postSchema);
 
-module.exports.addPost = function(newPost, callback) {
+module.exports.addPost = function (newPost, callback) {
     newPost.save(callback);
 }
-module.exports.getRecentPost = function(date, callback){
-    post.find({"ngayDang":{$lte : date},"duyet": false},callback).limit(10).sort({ngayDang: -1});
+
+
+module.exports.getRecentPost = function (date) {
+    return new Promise((resolve, reject) => {
+        post.find({ "ngayDang": { $lte: date }, "duyet": true }, (err, docs) => {
+            if (err) reject (err);
+            resolve(docs);
+        }).limit(10).sort({ ngayDang: -1 })
+    })
+
 }
-module.exports.getMostViewsPost = function(date,callback) {
-    post.find({"ngayDang":{$lte : date},"duyet": false},callback).limit(10).sort({views: -1});
+module.exports.getMostViewsPost = function (date) {
+    return new Promise((resolve, reject) => {
+        post.find({ "ngayDang": { $lte: date }, "duyet": false }, (err, docs) => {
+            if (err) reject (err);
+            resolve(docs);
+        }).limit(10).sort({ views: -1 })
+    })
+
 }

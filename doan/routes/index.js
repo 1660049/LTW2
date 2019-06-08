@@ -8,19 +8,24 @@ var mongoose = require('mongoose');
 routes.get('/', (req, res, next) => {
     var date = new Date();
     var date = date.toISOString();
-    var postChunks = [];
-    var chunkSize = 2;
-    postModel.getRecentPost(date, (err, docs) => {
-        if (err) return next(err);
-        for (var i = 0; i < docs.length; i += chunkSize) {
-            postChunks.push(docs.slice(i, i + chunkSize));
-        }
-        res.render('dashboard', { post: postChunks});
-    });
-    // postModel.getMostViewsPost(date, (err,docs)=>{
-        
-    // });
+
+    Promise.all([postModel.getRecentPost(date), postModel.getMostViewsPost(date)]).then(([postN, postM]) => {
+        res.render('dashboard',{
+            post: postN,
+            postM: postM
+        });
+    }).catch(err=>{next(err)});
     
+    // postModel.getRecentPost(date).then(docs => {
+    //     var postChunks = [];
+    //     var chunkSize = 2;
+    //     for (var i = 0; i < docs.length; i += chunkSize) {
+    //         postChunks.push(docs.slice(i, i + chunkSize));
+    //     }
+    // res.render('dashboard', {
+    //     post: postChunks,
+    // })
+    // }).catch(next())
 })
 
 routes.get('/post/:id', (req, res, next) => {

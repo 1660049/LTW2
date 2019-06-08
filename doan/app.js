@@ -9,6 +9,7 @@ var config = require('./config/database');
 mongoose.set('useCreateIndex', true);
 mongoose.connect(config.database, { useNewUrlParser: true }).then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(`Connect fail!!!! with error: ${err}`));
+mongoose.Promise = global.Promise;
 
 var app = express();
 app.use(morgan('dev'));
