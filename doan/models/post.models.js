@@ -15,19 +15,12 @@ var postSchema = mongoose.Schema({
 
 var post = module.exports = mongoose.model('post', postSchema);
 
-module.exports.addPost = function (newPost, callback) {
+module.exports.addPost = function(newPost, callback) {
     newPost.save(callback);
 }
-module.exports.loadPost = function (callback) {
-    post.findOne(callback);
+module.exports.getRecentPost = function(date, callback){
+    post.find({"ngayDang":{$lte : date},"duyet": false},callback).limit(10).sort({ngayDang: -1});
 }
-module.exports.getPostBy = function (categories, callback) {
-    var query = {
-        chuyenMuc: categories,
-        duyet: true,
-    };
-    post.find(query, callback).limit(10);
-}
-module.exports.getMostViewPost = function () {
-
+module.exports.getMostViewsPost = function(date,callback) {
+    post.find({"ngayDang":{$lte : date},"duyet": false},callback).limit(10).sort({views: -1});
 }
