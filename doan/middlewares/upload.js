@@ -13,13 +13,16 @@ module.exports = function (app) {
     }
   });
 
-  app.post('/uppost', restricted, (req, res, next) => {
+  app.post('/user/uppost', restricted, (req, res, next) => {
     multer({ storage }).single('file')(req, res, err => {
       if (err) {
         return res.json({
           error: err.message
         })
       }
+      // var date = new Date();
+      // date = req.body.ngayDang;
+      // date.toISOString();
       var newPost = new postUser({
         img: '/public/img/' + req.file.filename,
         tieuDe: req.body.tieuDe,
@@ -32,11 +35,10 @@ module.exports = function (app) {
         duyet: false,
         views: 0,
       });
-      postUser.addPost(newPost,(err,post)=>{
-        if(err) return res.json({error: err.message});
-        console.log(post);
+      postUser.addPost(newPost, (err, post) => {
+        if (err) return res.json({ error: err.message });
       });
-      res.redirect('/');
+      res.redirect('/user/uppost');
     })
   })
 }

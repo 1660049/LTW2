@@ -10,13 +10,30 @@ routes.get('/', (req, res, next) => {
     var date = date.toISOString();
 
     Promise.all([postModel.getRecentPost(date), postModel.getMostViewsPost(date)]).then(([postN, postM]) => {
-        res.render('dashboard',{
-            post: postN,
-            postM: postM
+        if (postN) {
+            var postNchunks = [];
+            var Nsize = 2;
+            for (var i = 0; i < postN.length; i += Nsize) {
+                postNchunks.push(postN.slice(i, i + Nsize));
+            }
+        }
+
+        if(postM){
+            var postMchunks =[];
+            var Msize = 1;
+            for (var i = 0; i < postM.length; i += Msize) {
+                postMchunks.push(postM.slice(i, i + Msize));
+            }
+        }
+
+        res.render('dashboard', {
+            post: postNchunks,
+            postM: postMchunks
         });
-    }).catch(err=>{next(err)});
-    
+    }).catch(err => { next(err) });
+
     // postModel.getRecentPost(date).then(docs => {
+    //     console.log(docs);
     //     var postChunks = [];
     //     var chunkSize = 2;
     //     for (var i = 0; i < docs.length; i += chunkSize) {
@@ -25,7 +42,7 @@ routes.get('/', (req, res, next) => {
     // res.render('dashboard', {
     //     post: postChunks,
     // })
-    // }).catch(next())
+    // }).catch(err=> {next(err)});
 })
 
 routes.get('/post/:id', (req, res, next) => {
