@@ -59,12 +59,20 @@ module.exports.SingleID = function(id){
         })
     })
 }
-module.exports.singleCategories = function(date, catName){
+module.exports.findCategories = function(date, catName){
     return new Promise((resolve,reject)=>{
         post.find({"ngayDang": { $lte: date },"chuyenMuc": catName, "duyet": true},(err,docs)=>{
             if(err) reject(err);
             resolve(docs);
         }).limit(2).sort({ ngayDang: -1 });
+    })
+}
+module.exports.findAllCategories = function(date, catName, start_offset){
+    return new Promise((resolve,reject)=>{
+        post.find({"ngayDang": { $lte: date },"chuyenMuc": catName, "duyet": true},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        }).sort({ ngayDang: -1 }).limit(6).skip(start_offset);
     })
 }
 module.exports.countCat = function(date, catName){

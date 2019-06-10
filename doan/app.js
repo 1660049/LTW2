@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var hbs_section = require('express-handlebars-sections');
 var moment = require('moment');
 var config = require('./config/database');
+var h_dateformat = require('helper-dateformat');
 mongoose.set('useCreateIndex', true);
 mongoose.connect(config.database, { useNewUrlParser: true }).then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(`Connect fail!!!! with error: ${err}`));
@@ -13,6 +14,8 @@ mongoose.Promise = global.Promise;
 
 var app = express();
 app.use(morgan('dev'));
+
+
 
 require('./middlewares/session')(app);
 require('./middlewares/passport')(app);
@@ -32,7 +35,10 @@ app.engine('hbs',exphdb({
     defaultLayout: 'main.hbs',
     helpers: {
         section: hbs_section(),
-        moment: moment()
+        moment: moment(),
+        h_dateformat: (date)=>{
+            return h_dateformat(date,"dd/mm/yyyy");
+        }
     }
 }));
 app.set('view engine','hbs');
