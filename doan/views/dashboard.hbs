@@ -1,5 +1,17 @@
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            cloudServices: {
+                tokenUrl: 'https://40026.cke-cs.com/token/dev/KfpkgsMLg4H3MScxXYcy7tQSOnwlgQzrxdgVstsi5dBdn3S4PYlHS0cwq8Vm',
+                uploadUrl: 'https://40026.cke-cs.com/easyimage/upload/'
+            }
+        })
+        .catch(error => {
+                console.error(error);
+            });
+</script>
 {{/section}}
 
 <header class="mb-5">
@@ -58,7 +70,8 @@
                     {{#each this}}
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}" alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                                    alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
@@ -72,7 +85,86 @@
                     {{/each}}
                     <div class="clearfix visible-md visible-lg"></div>
                     {{/each}}
-
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h2>Bài viết mới theo chuyên mục</h2>
+                        </div>
+                    </div>
+                    {{#each postTG}}
+                    {{#each this}}
+                    <div class="col-md-6">
+                        <div class="post">
+                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                                    alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                            <div class="post-body">
+                                <div class="post-meta">
+                                    <a class="post-category cat-4"
+                                        href="/catagories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                                    <span class="post-date">{{this.ngayDang}}</span>
+                                </div>
+                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/each}}
+                    <div class="clearfix visible-md visible-lg"></div>
+                    {{#each postTE}}
+                    {{#each this}}
+                    <div class="col-md-6">
+                        <div class="post">
+                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                                    alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                            <div class="post-body">
+                                <div class="post-meta">
+                                    <a class="post-category cat-4"
+                                        href="/catagories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                                    <span class="post-date">{{this.ngayDang}}</span>
+                                </div>
+                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/each}}
+                    {{#each postCN}}
+                    {{#each this}}
+                    <div class="col-md-6">
+                        <div class="post">
+                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                                    alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                            <div class="post-body">
+                                <div class="post-meta">
+                                    <a class="post-category cat-4"
+                                        href="/catagories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                                    <span class="post-date">{{this.ngayDang}}</span>
+                                </div>
+                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/each}}
+                    <div class="clearfix visible-md visible-lg"></div>
+                    {{#each postCD}}
+                    {{#each this}}
+                    <div class="col-md-6">
+                        <div class="post">
+                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                                    alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                            <div class="post-body">
+                                <div class="post-meta">
+                                    <a class="post-category cat-4"
+                                        href="/catagories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                                    <span class="post-date">{{this.ngayDang}}</span>
+                                </div>
+                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/each}}
+                    <div class="clearfix visible-md visible-lg"></div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -80,37 +172,28 @@
                     <div class="section-title">
                         <h2>Đọc nhiều</h2>
                     </div>
-
+                    {{#each postM}}
+                    {{#each this}}
                     <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="./img/widget-1.jpg" alt=""></a>
+                        <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}" alt=""></a>
                         <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And
-                                    Development Tools</a></h3>
+                            <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
                         </div>
                     </div>
-
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website
-                                    Design Mockup Into Code Automatically</a></h3>
-                        </div>
+                    {{/each}}
+                    {{/each}}
+                </div>
+                <div class="aside-widget">
+                    <div class="section-title">
+                        <h2>Catagories</h2>
                     </div>
-
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The
-                                    Backend Development Block!</a></h3>
-                        </div>
-                    </div>
-
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And
-                                    Development Tools</a></h3>
-                        </div>
+                    <div class="category-widget">
+                        <ul>
+                            <li><a href="#" class="cat-1">Tin game<span>{{countTG}}</span></a></li>
+                            <li><a href="#" class="cat-2">Tin esport<span>{{countTE}}</span></a></li>
+                            <li><a href="#" class="cat-4">Cẩm nang<span>{{countCN}}</span></a></li>
+                            <li><a href="#" class="cat-3">Cộng đồng<span>{{countCD}}</span></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

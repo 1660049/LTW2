@@ -1,3 +1,22 @@
+{{#section 'js'}}
+<script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            removePlugins: ['Heading', 'Link'],
+            toolbar: []
+        })
+        .then(editor => {
+            editor.isReadOnly = true;
+            window.editor = editor;
+        })
+        .catch(err => {
+            console.error(err.stack);
+        });
+
+</script>
+</script>
+{{/section}}
 <header id="header">
     <div id="post-header" class="page-header">
         <div class="background-img" style="background-image: url('{{post.img}}');"></div>
@@ -21,7 +40,8 @@
             <div class="col-md-8">
                 <div class="section-row sticky-container">
                     <div class="main-post">
-                        {{{post.content}}}
+
+                        <textarea name="content" id="editor">{{{post.content}}} </textarea>
                     </div>
                     <div class="section-row">
                         <div class="post-author">

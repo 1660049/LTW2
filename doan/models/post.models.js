@@ -27,19 +27,51 @@ module.exports.addPost = function (newPost, callback) {
 module.exports.getRecentPost = function (date) {
     return new Promise((resolve, reject) => {
         post.find({ "ngayDang": { $lte: date }, "duyet": true }, (err, docs) => {
-            if (err) reject (err);
+            if (err) reject(err);
             //console.log(docs);
             resolve(docs);
-        }).limit(10).sort({ ngayDang: -1 });
+        }).sort({ ngayDang: -1 }).limit(10);
     })
 
 }
 module.exports.getMostViewsPost = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "duyet": false }, (err, docs) => {
-            if (err) reject (err);
-           resolve(docs);
-        }).limit(10).sort({ views: -1 });
+        post.find({ "ngayDang": { $lte: date }, "duyet": true }, (err, docs) => {
+            if (err) reject(err);
+            resolve(docs);
+        }).sort({ views: -1 }).limit(10);
     })
-
 }
+
+module.exports.updateViews = function(id){
+    return new Promise((resolve,reject)=>{
+        post.findByIdAndUpdate(id,{$set:{views: views + 1}},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        })
+    })
+}
+module.exports.SingleID = function(id){
+    return new Promise((resolve,reject)=>{
+        post.findById(id,(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        })
+    })
+}
+module.exports.singleCategories = function(date, catName){
+    return new Promise((resolve,reject)=>{
+        post.find({"ngayDang": { $lte: date },"chuyenMuc": catName, "duyet": true},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        }).limit(2).sort({ ngayDang: -1 });
+    })
+}
+module.exports.countCat = function(date, catName){
+    return new Promise((resolve,reject)=>{
+        post.count ({"ngayDang": { $lte: date },"chuyenMuc": catName, "duyet": true},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        })
+    })
+}  
