@@ -4,14 +4,18 @@ var restricted = require('../middlewares/restricted');
 var postModel = require('../models/post.models');
 var moment = require('moment');
 var mongoose = require('mongoose');
-
+var date = new Date();
+var date = date.toISOString();
+var tinGame = "Tin game";
+var tinEsport = "Tin Esport";
+var camNang = "Cẩm nang";
+var congDong = "Cộng đồng";
+var limit = new Number();
+limit = 6;
 routes.get('/', (req, res, next) => {
     var date = new Date();
     var date = date.toISOString();
-    var tinGame = "Tin game";
-    var tinEsport = "Tin esport";
-    var camNang = "Cẩm nang";
-    var congDong = "Cộng đồng";
+
     Promise.all([postModel.getRecentPost(date),
     postModel.getMostViewsPost(date),
     postModel.findCategories(date, tinGame),
@@ -90,18 +94,10 @@ routes.get('/post/:id', (req, res, next) => {
 })
 
 routes.get('/categories/:catName', (req, res, next) => {
-    var date = new Date();
-    var date = date.toISOString();
     var catName = req.params.catName;
-    var limit = new Number();
-    limit = 6;
     var page = req.query.page || 1;
-    if (page < 1) page = 1;
+    if (page <= 1) page = 1;
     var start_offset = (page - 1) * limit;
-    var tinGame = "Tin game";
-    var tinEsport = "Tin esport";
-    var camNang = "Cẩm nang";
-    var congDong = "Cộng đồng";
     Promise.all([
         postModel.findAllCategories(date, catName, start_offset),
         postModel.countCat(date, catName),
@@ -112,14 +108,12 @@ routes.get('/categories/:catName', (req, res, next) => {
     ]).then(([postN, countCat, countTG, countTE, countCN, countCD]) => {
         var total = new Number();
         total = countCat;
-        console.log(total);
         var nPage = new Number();
         nPage = Math.floor(total / limit);
-        if (total % limit > 0)
+        if (total % limit <= 0)
             nPages = nPage + 1;
-        console.log(nPage);
         var page_numbers = [];
-        for (var i = 1; i <= nPages; i++) {
+        for (var i = 1; i < nPages; i++) {
             page_numbers.push({
                 value: i,
                 active: i === +page
@@ -138,9 +132,48 @@ routes.get('/categories/:catName', (req, res, next) => {
             countTG,
             countTE,
             countCN,
-            countCD
+            countCD,
+            catName
         })
     }).catch(err => { next(err); });
+})
+
+routes.get('/tags/:tagName', (req, res, next) => {
+    var tagName = req.params.tagName;
+    var page = req.query.page || 1;
+    if (page <= 1) page = 1;
+    var start_offset = (page - 1) * limit;
+    Promise.all([
+        postModel.findAllWithTagName(date, tagName),
+        postModel.countTag(date, tagName)
+    ]).then(([postN, countTag]) => {
+        var total = new Number();
+        total = countTag;
+        console.log(total);
+        var nPage = new Number();
+        nPage = Math.floor(total / limit);
+        if (total % limit <= 0)
+            nPages = nPage + 1;
+        var page_numbers = [];
+        for (var i = 1; i < nPages; i++) {
+            page_numbers.push({
+                value: i,
+                active: i === +page
+            })
+        }
+        if (postN) {
+            var postNchunks = [];
+            var Nsize = 2;
+            for (var i = 0; i < postN.length; i += Nsize) {
+                postNchunks.push(postN.slice(i, i + Nsize));
+            }
+        }
+        res.render('tag', {
+            post: postNchunks,
+            page_numbers,
+            tagName
+        })
+    }).catch()
 })
 
 routes.get('/demo', (req, res, next) => {

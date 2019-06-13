@@ -54,9 +54,6 @@ routes.get('/profile', restricted, (req, res, next) => {
 routes.post('/logout', (req, res, next) => {
     req.logOut();
     res.redirect('login');
-});
-
-routes.get('/uppost', writerRestricted, (req, res, next) => {
-    res.render('uppost');
 })
+
 module.exports = routes;

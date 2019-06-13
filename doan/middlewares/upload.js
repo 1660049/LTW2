@@ -13,7 +13,7 @@ module.exports = function (app) {
     }
   });
 
-  app.post('/user/uppost', restricted, (req, res, next) => {
+  app.post('/writer/uppost', restricted, (req, res, next) => {
     multer({ storage }).single('file')(req, res, err => {
       if (err) {
         return res.json({

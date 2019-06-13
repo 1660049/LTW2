@@ -3,8 +3,12 @@ module.exports = (req, res, next)=> {
         var user = req.user;
         res.locals.isAuthenticated = true;
         res.locals.authUser = req.user;
+        res.locals.idUser = req.user._id;
         if(user.role === 'writer'){
             res.locals.writer = true;
+        }
+        if(user.role === 'editor'){
+            res.locals.editor = true;
         }
     }
     next();

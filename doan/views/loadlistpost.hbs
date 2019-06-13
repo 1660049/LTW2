@@ -1,0 +1,55 @@
+<div class="section">
+    <div class="container">
+        <div class="row">
+            {{#each post}}
+            {{#each this}}
+            <div class="col-md-8">
+                <div class="post">
+                    <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                    <div class="post-body">
+                        <div class="post-meta">
+                            <a class="post-category cat-1" href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                            <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                        </div>
+                        <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                        <div class="text-right">{{#ifConTrue this.duyet}}
+                            <button type="button" class="btn btn-outline-success mt-2" disabled>Đã được duyệt</button>
+                            {{else}}
+                            <button type="button" class="btn btn-outline-danger mt-2" disabled>Chưa được duyệt</button>
+                            {{/ifConTrue}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{/each}}
+            <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        {{#each this.page_numbers}}
+                        {{#if active}}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                                {{value}}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </li>
+                        {{else}}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{value}}">{{value}}</a>
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

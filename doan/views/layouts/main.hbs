@@ -27,22 +27,22 @@
                         TIN GAME
                     </a>
                     <div class="dropdown-content">
-                        <a class="dropdown-item" href="#">PHÂN TÍCH</a>
-                        <a class="dropdown-item" href="#">XU HƯỚNG</a>
-                        <a class="dropdown-item" href="#">PBE</a>
-                        <a class="dropdown-item" href="#">PHÁT TRIỂN</a>
+                        <a class="dropdown-item" href="/tags/Phân tích">PHÂN TÍCH</a>
+                        <a class="dropdown-item" href="/tags/Xu hướng">XU HƯỚNG</a>
+                        <a class="dropdown-item" href="/tags/PBE">PBE</a>
+                        <a class="dropdown-item" href="/tags/Phát triển">PHÁT TRIỂN</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="/categories/Tin esport" id="navbarDropdown">
+                    <a class="nav-link" href="/categories/Tin Esport" id="navbarDropdown">
                         TIN ESPORTS
                     </a>
                     <div class="dropdown-content">
-                        <a class="dropdown-item" href="#">LỊCH THI ĐẤU</a>
-                        <a class="dropdown-item" href="#">VCS</a>
-                        <a class="dropdown-item" href="#">QUỐC TẾ</a>
-                        <a class="dropdown-item" href="#">LCS/LEC</a>
-                        <a class="dropdown-item" href="#">KHU VỰC KHÁC</a>
+                        <a class="dropdown-item" href="/tags/Lịch thi đấu">LỊCH THI ĐẤU</a>
+                        <a class="dropdown-item" href="/tags/VCS">VCS</a>
+                        <a class="dropdown-item" href="/tags/Quốc tế">QUỐC TẾ</a>
+                        <a class="dropdown-item" href="/tags/LCS">LCS</a>
+                        <a class="dropdown-item" href="/tags/Khu vực khác">KHU VỰC KHÁC</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -50,18 +50,19 @@
                         CẨM NANG
                     </a>
                     <div class="dropdown-content">
-                        <a class="dropdown-item" href="#">CHIẾN THUẬT</a>
-                        <a class="dropdown-item" href="#">CƠ CHẾ HOẠT ĐỘNG</a>
-                        <a class="dropdown-item" href="#">TƯỚNG</a>
-                        <a class="dropdown-item" href="#">KHÁC</a>
+                        <a class="dropdown-item" href="/tags/Chiến thuật">CHIẾN THUẬT</a>
+                        <a class="dropdown-item" href="/tags/Cơ chế hoạt động">CƠ CHẾ HOẠT ĐỘNG</a>
+                        <a class="dropdown-item" href="/tags/Tướng">TƯỚNG</a>
+                        <a class="dropdown-item" href="/tags/Khác">KHÁC</a>
                     </div>
-                </li><li class="nav-item dropdown">
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link" href="/Categories/Cộng đồng" id="navbarDropdown">
                         CỘNG ĐỒNG
                     </a>
                     <div class="dropdown-content">
-                        <a class="dropdown-item" href="#">STREAM</a>
-                        <a class="dropdown-item" href="#">GEAR</a>
+                        <a class="dropdown-item" href="/tags/Stream">STREAM</a>
+                        <a class="dropdown-item" href="/tags/Gear">GEAR</a>
                     </div>
                 </li>
             </ul>
@@ -85,7 +86,11 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="/user/profile">Cá nhân</a>
                         {{#if writer}}
-                        <a class="dropdown-item" href="/user/uppost">Thêm bài viết</a>
+                        <a class="dropdown-item" href="/writer/uppost">Thêm bài viết</a>
+                        <a class="dropdown-item" href="/writer/loadpost">Bài đã viết</a>
+                        {{/if}}
+                        {{#if editor}}
+                        <a class="dropdown-item" href="/editor/browsepost">Danh sách bài viết đợi duyệt</a>
                         {{/if}}
                         <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">Đăng xuất</a>
                     </div>
