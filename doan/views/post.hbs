@@ -22,7 +22,7 @@
         <div class="background-img" style="background-image: url('{{post.img}}');"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <h1>{{post.tieuDe}}</h1>
                     <div class="post-meta">
                         <a class="post-category cat-1" href="#">{{post.chuyenMuc}}</a>
@@ -43,22 +43,99 @@
 
                         <textarea name="content" id="editor">{{{post.content}}} </textarea>
                     </div>
-                    <div class="section-row">
-                        <div class="post-author">
-                            <div class="media">
-                                <div class="media-left">
-                                    <img class="media-object" src="/public/img/Wallpapers-Heo-Timt-2019 19.jpg" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="media-heading">
-                                        <h3>Tác giả</h3>
+                    <div class="section-row mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="post-author">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img class="media-object" src="/public/img/Wallpapers-Heo-Timt-2019 19.jpg"
+                                                alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="media-heading">
+                                                <h3>Tác giả</h3>
+                                                <p>{{nameAuther}}</p>
+                                            </div>
+                                            <p>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p>
-                                    </p>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+                    <div class="section-row">
+                        <div class="section-title">
+                            <h2>{{totalComment}} Comments</h2>
+                        </div>
+
+                        <div class="post-comments">
+                            <!-- comment -->
+                            {{#each this.commentsPost}}
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="media-object" src="/public/img/Nice[132].jpg" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <h4>{{name}}</h4>
+                                        <span class="time">{{time}}</span>
+                                    </div>
+                                    <p>{{comment}}</p>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <!-- /comment -->
+                        </div>
+                    </div>
+
+                    <div class="section-row">
+                        <div class="section-title">
+                            <h2>Leave a reply</h2>
+                            <p>your email address will not be published. required fields are marked *</p>
+                        </div>
+                        <form class="post-reply" method="POST" id="id" name="id" action="/comment">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <span>Name *</span>
+                                        <input class="input" type="text" name="name">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <span>Email *</span>
+                                        <input class="input" type="email" name="email">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="input" name="message" placeholder="Message"></textarea>
+                                    </div>
+                                    <button value="{{post._id}}" class="btn btn-success" name="id" id="id" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="aside-widget">
+                    <div class="section-title">
+                        <h2>Bài viết liên quan</h2>
+                    </div>
+                    {{#each this.postlq}}
+                    
+                    <div class="post post-widget">
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}" alt=""></a>
+                        <div class="post-body">
+                            <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
+                        </div>
+                    </div>
+                    
+                    {{/each}}
                 </div>
             </div>
         </div>

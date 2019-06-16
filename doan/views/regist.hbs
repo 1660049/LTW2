@@ -15,14 +15,14 @@
             rules: {
                 f_Username: {
                     required: true,
-                    //remote: {
-                        //url: '/account/is-available',
-                        //data: {
-                            //user: function () {
-                                //return $('#txtUsername').val();
-                            //}
-                        //}
-                    //}
+                    remote: {
+                        url: '/user/is-available',
+                        data: {
+                            user: function () {
+                                return $('#txtUsername').val();
+                            }
+                        }
+                    }
                 },
                 password: {
                     required: true,
@@ -47,7 +47,7 @@
             messages: {
                 f_Username: {
                     required: 'Your username is required.',
-                    //remote: 'Your username has been taken, please take another.'
+                    remote: 'Your username has been taken, please take another.'
                 },
                 password: {
                     required: 'Your password is required.',

@@ -20,9 +20,6 @@ module.exports = function (app) {
           error: err.message
         })
       }
-      // var date = new Date();
-      // date = req.body.ngayDang;
-      // date.toISOString();
       var newPost = new postUser({
         img: '/public/img/' + req.file.filename,
         tieuDe: req.body.tieuDe,
@@ -38,7 +35,7 @@ module.exports = function (app) {
       postUser.addPost(newPost, (err, post) => {
         if (err) return res.json({ error: err.message });
       });
-      res.redirect('/user/uppost');
+      res.redirect('/writer/loadpost');
     })
   })
 }

@@ -46,6 +46,12 @@ app.engine('hbs', exphdb({
                 return option.fn(this);
             };
             return option.inverse(this);
+        },
+        ifCon: (value1, option) => {
+            if (value1 != 'admin') {
+                return option.fn(this);
+            };
+            return option.inverse(this);
         }
     }
 }));
@@ -66,6 +72,8 @@ app.use('/writer', writerRouter);
 var editorRouter = require('./routes/editor');
 app.use('/editor',editorRouter);
 
+var adminRouter = require('./routes/admin');
+app.use('/admin',adminRouter);
 
 var port = 3000;
 app.listen(port, () => {

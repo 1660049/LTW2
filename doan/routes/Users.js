@@ -34,7 +34,7 @@ routes.get('/regist', (req, res, next) => {
 routes.post('/regist', (req, res, next) => {
     var user = new Users({
         userName: req.body.f_Username,
-        email: req.body.email,
+        email: req.body.f_Email,
         password: req.body.password,
         name: req.body.f_Name,
         role: 'guest'
@@ -55,5 +55,13 @@ routes.post('/logout', (req, res, next) => {
     req.logOut();
     res.redirect('login');
 })
+
+routes.get('/is-available', (req, res, next) => {
+    var user = req.query.user;
+    Users.getUserByUserName(user,(err,docs)=>{
+        if(docs) res.json(false);
+        else res.json(true);
+    })
+  })
 
 module.exports = routes;

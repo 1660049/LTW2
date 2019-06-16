@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/public/css/style.css">
 
     {{{_sections.css}}}
-    <title>Document</title>
+    <title>TH16_NEWS_LMHT</title>
     <style>
         html,
         body {
@@ -76,6 +76,10 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <form action="/user/logout" id="frmLogout" method="POST"></form>
             <ul class="navbar-nav ml-auto">
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
                 {{#if isAuthenticated }}
                 <div class="btn-group">
                     <button type="button" class="btn btn-outline-secondary" data-toggle="dropdown" aria-haspopup="true"
@@ -91,6 +95,9 @@
                         {{/if}}
                         {{#if editor}}
                         <a class="dropdown-item" href="/editor/browsepost">Danh sách bài viết đợi duyệt</a>
+                        {{/if}}
+                        {{#if admin}}
+                        <a class="dropdown-item" href="/admin/adminControl">Admin Control</a>
                         {{/if}}
                         <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">Đăng xuất</a>
                     </div>

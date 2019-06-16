@@ -2,6 +2,8 @@ var express = require('express');
 var routes = express.Router();
 var restricted = require('../middlewares/restricted');
 var postModel = require('../models/post.models');
+var commentModel = require('../models/comment.models');
+var userModel = require('../models/users.models');
 var moment = require('moment');
 var mongoose = require('mongoose');
 var date = new Date();
@@ -12,10 +14,9 @@ var camNang = "Cẩm nang";
 var congDong = "Cộng đồng";
 var limit = new Number();
 limit = 6;
+var date = new Date();
+var date = date.toISOString();
 routes.get('/', (req, res, next) => {
-    var date = new Date();
-    var date = date.toISOString();
-
     Promise.all([postModel.getRecentPost(date),
     postModel.getMostViewsPost(date),
     postModel.findCategories(date, tinGame),
@@ -83,14 +84,37 @@ routes.get('/', (req, res, next) => {
 })
 
 routes.get('/post/:id', (req, res, next) => {
+    var date = new Date();
+    var date = date.toISOString();
     var id = req.params.id;
-    postModel.SingleID(id).then((docs) => {
+    Promise.all([
+        commentModel.getComment(id),
+        commentModel.getCountComment(id),
+        postModel.SingleID(id),
+    ]).then(([comment, countcm, post]) => {
         var slviews = Number;
-        slviews = docs.views + 1;
-        postModel.findByIdAndUpdate(id, { $set: { views: slviews } }, (err, docs) => {
-            res.render('post', { post: docs });
-        })
-    }).catch((err) => { res.end(err) });
+        slviews = post.views + 1;
+        postModel.findByIdAndUpdate(id, { $set: { views: slviews } }, (callback) => { });
+        var iduser = post.idAuther;
+        var tagpost = post.tag;
+        Promise.all([userModel.getUserById(iduser), postModel.GetPostWithTagName(date, tagpost)]).then(([user, postlq]) => {
+            res.render('post', {
+                postlq,
+                post: post,
+                nameAuther: user.name,
+                commentsPost: comment,
+                totalComment: countcm
+            })
+        }).catch(error => res.json(error));
+    }).catch((err) => { res.json(err) });
+    // postModel.SingleID(id).then((docs) => {
+    //     var slviews = Number;
+    //     slviews = docs.views + 1;
+
+    //     postModel.findByIdAndUpdate(id, { $set: { views: slviews } }, (err, docs) => {
+    //         res.render('post', { post: docs });
+    //     })
+    // }).catch((err) => { res.end(err) });
 })
 
 routes.get('/categories/:catName', (req, res, next) => {
@@ -183,6 +207,19 @@ routes.get('/demo', (req, res, next) => {
 
 routes.get('/roleError', (req, res, next) => {
     res.render('roleError');
+})
+
+routes.post('/comment', (req, res, next) => {
+    var newComment = commentModel({
+        idPost: req.body.id,
+        name: req.body.name,
+        email: req.body.email,
+        comment: req.body.message,
+        time: new Date()
+    });
+    commentModel.addComment(newComment, (err, docs) => {
+        res.redirect(`/post/${req.body.id}`);
+    })
 })
 
 module.exports = routes;

@@ -3,6 +3,7 @@ var routes = express.Router();
 var mongoose = require('mongoose');
 var Users = require('../models/users.models');
 var post = require('../models/post.models');
+var approved = require('../models/approved.models');
 var passport = require('passport');
 var editorRestricted = require('../middlewares/editorRetricted');
 var limit = new Number();
@@ -11,10 +12,10 @@ limit = 10;
 routes.use(require('../middlewares/auth.mdw'));
 
 routes.get('/approved/:id', editorRestricted, (req, res, next) => {
-    var id = req.params.id;
-    post.approvedPost(id).then((docs) => {
-        res.redirect('/')
-    }).then((err) => next(err));
+    var idPost = req.params.id;
+    post.approvedPost(idPost).then((docs)=>{
+    }).catch(err=>{throw err});
+    res.redirect('/editor/browsepost');
 })
 routes.get('/browsepost', editorRestricted, (req, res, next) => {
     var page = req.query.page || 1;
@@ -42,10 +43,20 @@ routes.get('/browsepost', editorRestricted, (req, res, next) => {
                 active: i === +page
             })
         }
-        res.render('browsepost',{
+        if(postchunks)
+        res.render('browsepost', {
             post: postchunks,
             page_numbers
         });
-    }).catch((err)=>next(err))
+        else res.render('browserpost');
+    }).catch((err) => next(err))
 })
+routes.get('/viewDetail/:id', editorRestricted, (req, res, next) => {
+    var id = req.params.id;
+    post.SingleID(id).then((docs) => {
+        res.render('editorVPost', { post: docs });
+    }).catch((err) => { res.end(err) });
+})
+
 module.exports = routes;
+

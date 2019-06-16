@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-
 mongoose.Promise = Promise;
 
 var postSchema = mongoose.Schema({
@@ -97,6 +96,14 @@ module.exports.findAllWithTagName = function(date, tagName, start_offset){
         }).sort({ ngayDang: -1 }).limit(6).skip(start_offset);
     })
 }
+module.exports.GetPostWithTagName = function(date, tagName){
+    return new Promise((resolve,reject)=>{
+            post.find({"ngayDang": { $lte: date },"tag": tagName, "duyet": true},(err,docs)=>{
+                if(err) reject(err);
+                resolve(docs);
+            }).sort({ ngayDang: -1 }).limit(10);
+    })
+}
 //
 module.exports.countTag = function(date, tagName){
     return new Promise((resolve,reject)=>{
@@ -111,7 +118,7 @@ module.exports.GetPostByUser = function(idUser){
     return new Promise((resolve,reject)=>{
         post.find({idAuther: idUser},(err,docs)=>{
             if(err) reject(err);
-            if(docs) resolve(docs);
+            resolve(docs);
         })
     })
 }
@@ -123,11 +130,13 @@ module.exports.countGetPostByUser = function(idUser){
         })
     })
 }
+
+//editor
 module.exports.getAllNotApproved = ()=>{
     return new Promise((resolve,reject)=>{
         post.find({duyet: false},(err,docs)=>{
             if(err) reject(err);
-            if(docs) resolve(docs);
+            resolve(docs);
         })
     })
 }
@@ -135,15 +144,30 @@ module.exports.countGetNotApproved = ()=>{
     return new Promise((resolve,reject)=>{
         post.count({duyet: false},(err,docs)=>{
             if(err) reject(err);
-            if(docs) resolve(docs);
+            resolve(docs);
         })
     })
 }
+// module.exports.getApprovedPostByEditor = (id)=>{
+//     return new Promise((resolve,reject)=>{
+//         post.aggregate({$lookup: {
+//             from: 'approved',
+//             localField: 'idPost',
+//             foreignField: '_id',
+//             as: '_id'
+//         }}).find()
+//     })
+// }
+
+//categories
+
+
+
 module.exports.getAllByCatName = (catName)=>{
     return new Promise((resolve,reject)=>{
         post.find({chuyenMuc: catName},(err,docs)=>{
             if(err) reject(err);
-            if(docs) resolve(docs);
+            resolve(docs);
         })
     })
 }
@@ -151,16 +175,17 @@ module.exports.countGetAllByCatName = (catName)=>{
     return new Promise((resolve,reject)=>{
         post.count({chuyenMuc: catName},(err,docs)=>{
             if(err) reject(err);
-            if(docs) resolve(docs);
+            resolve(docs);
         })
     })
 }
+
 
 module.exports.approvedPost = (id)=>{
     return new Promise((resolve,reject)=>{
         post.findByIdAndUpdate(id,{$set:{"duyet": true}},(err,docs)=>{
             if(err) reject(err);
-            if(docs) resolve(docs);
+            resolve(docs);
         })
     })
 }

@@ -20,10 +20,19 @@ module.exports.getUserByUserName = function (userName, callback) {
 }
 
 module.exports.getUserById = function (id) {
-    return Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>{
         this.findById(id,(err,user)=>{
             if(err) reject(err);
-            if(user) resolve(user);
+            resolve(user);
+        })
+    })
+}
+
+module.exports.getAllUser = function(){
+    return new Promise((resolve,reject)=>{
+        User.find({},(err,callback)=>{
+            if(err) reject(err);
+            resolve(callback);
         })
     })
 }
