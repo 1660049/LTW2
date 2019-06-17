@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="text-center mt-3">
+        <h1>QUẢN LÍ 16TH-NEWS-LMHT</h1>
+      </div>
+      <ul class="nav justify-content-center mt-3">
+        <li class="nav-item">
+          <a class="btn btn-info" href="/admin/adminControl/qltk">Quản lí tài khoản</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-info" href="/admin/adminControl/qlbv">Duyệt bài</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-info" href="/admin/adminControl/qlpost">Quản lí bài viết đã được đăng</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-info" href="/admin/adminControl/qleditor">Quản lí editor</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-info" href="/admin/adminControl/qleditor">Quản lí chuyên mục</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table mt-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Phân chuyên mục</th>
+            <th scope="col">Sửa chuyên mục</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.user}}
+          <tr>
+            <th scope="row"></th>
+            <td>{{userNameEditor}}</td>
+            <td>{{chuyenMucPTrach}}</td>
+            <td>
+              <a href="/admin/adminControl/editCategoriesTinGame/{{userNameEditor}}" class="btn btn-outline-primary ">Tin Game</a>
+              <a href="/admin/adminControl/editCategoriesTinEsport/{{userNameEditor}}" class="btn btn-outline-success ">Tin Esport</a>
+              <a href="/admin/adminControl/editCategoriesCamNang/{{userNameEditor}}" class="btn btn-outline-secondary ">Cẩm nang</a>
+              <a href="/admin/adminControl/editCategoriesCongDong/{{userNameEditor}}" class="btn btn-outline-danger ">Cộng đồng</a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

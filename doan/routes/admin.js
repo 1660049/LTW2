@@ -3,15 +3,44 @@ var routes = express.Router();
 var userModel = require('../models/users.models');
 var post = require('../models/post.models');
 var adminRetricted = require('../middlewares/adminRetricted');
+var editorDetail = require('../models/editorDetail.models');
 var limit = new Number();
 limit = 10;
+
+routes.get('/adminControl/editCategoriesTinGame/:userName',(req,res,next)=>{
+    var userName = req.params.userName;
+   editorDetail.findByIdAndUpdate({"userNameEditor": userName},{$set: {"chuyenMucPTrach": "Tin game"}},(err,callback)=>{
+       res.redirect('/admin/adminControl/qleditor');
+   })
+})
+
+routes.get('/adminControl/editCategoriesTinEsport/:userName',(req,res,next)=>{
+    var userName = req.params.userName;
+   editorDetail.findByIdAndUpdate({"userNameEditor": userName},{$set: {"chuyenMucPTrach": "Tin esport"}},(err,callback)=>{
+       res.redirect('/admin/adminControl/qleditor');
+   })
+})
+
+routes.get('/adminControl/editCategoriesCamNang/:userName',(req,res,next)=>{
+    var userName = req.params.userName;
+   editorDetail.findByIdAndUpdate({"userNameEditor": userName},{$set: {"chuyenMucPTrach": "Cẩm nang"}},(err,callback)=>{
+       res.redirect('/admin/adminControl/qleditor');
+   })
+})
+
+routes.get('/adminControl/editCategoriesCongDong/:userName',(req,res,next)=>{
+    var userName = req.params.userName;
+   editorDetail.findByIdAndUpdate({"userNameEditor": userName},{$set: {"chuyenMucPTrach": "Cộng đồng"}},(err,callback)=>{
+       res.redirect('/admin/adminControl/qleditor');
+   })
+})
 
 routes.get('/adminControl', adminRetricted, (req, res, next) => {
     res.render('viewAdmin/admin');
 })
 
 routes.get('/adminControl/qltk', adminRetricted, (req, res, next) => {
-    userModel.find({"role": {$ne: 'admin'}}, (err, docs) => {
+    userModel.find({ "role": { $ne: 'admin' } }, (err, docs) => {
         res.render('viewAdmin/qltkadmin', { user: docs });
     })
 })
@@ -25,14 +54,17 @@ routes.get('/adminControl/editRoleWriter/:id', adminRetricted, (req, res, next) 
 
 routes.get('/adminControl/editRoleEditor/:id', adminRetricted, (req, res, next) => {
     var idUser = req.params.id;
+    
     userModel.findByIdAndUpdate(idUser, { $set: { "role": "editor" } }, (err, docs) => {
-        res.redirect('/admin/adminControl/qltk');
-    })
-})
-routes.get('/adminControl/editRoleAdmin/:id', adminRetricted, (req, res, next) => {
-    var idUser = req.params.id;
-    userModel.findByIdAndUpdate(idUser, { $set: { "role": "admin" } }, (err, docs) => {
-        res.redirect('/admin/adminControl/qltk');
+        var string = "chưa được ủy quyền";
+        var newEditor = new editorDetail({
+            userNameEditor:docs.userName ,
+            chuyenMucPTrach: string,
+        });
+        editorDetail.addEditor(newEditor,(err, callback) => {
+
+        });
+        res.redirect('/admin/adminControl/qlEditor');
     })
 })
 
@@ -52,7 +84,6 @@ routes.get('/adminControl/qlbv', adminRetricted, (req, res, next) => {
         var total = new Number();
         total = Ctotal;
         var nPage = new Number();
-        console.log(Math.floor(total / limit));
         nPage = Math.floor(total / limit);
         if (total % limit >= 0)
             nPages = nPage + 1;
@@ -98,10 +129,10 @@ routes.get('/adminControl/qlpost', adminRetricted, (req, res, next) => {
                 active: i === +page
             })
         }
-            res.render('viewAdmin/qlpost', {
-                post: postchunks,
-                page_numbers
-            });
+        res.render('viewAdmin/qlpost', {
+            post: postchunks,
+            page_numbers
+        });
     }).catch((err) => next(err))
 })
 
@@ -120,6 +151,8 @@ routes.get('/approved/:id', adminRetricted, (req, res, next) => {
 })
 
 routes.get('/adminControl/qleditor', adminRetricted, (req, res, next) => {
-    res.render('viewAdmin/qlEditor');
+   editorDetail.find((err, docs) => {
+        res.render('viewAdmin/qlEditor', { user: docs });
+    })
 })
 module.exports = routes;
