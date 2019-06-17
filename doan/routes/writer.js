@@ -8,7 +8,7 @@ var passport = require('passport');
 
 var writerRestricted = require('../middlewares/writerRestricted');
 var limit = new Number();
-limit = 10;
+limit = 6;
 routes.get('/uppost', writerRestricted, (req, res, next) => {
     res.render('viewWriter/uppost');
 })
@@ -20,14 +20,12 @@ routes.get('/loadpost', writerRestricted, (req, res, next) => {
     if (page < 1) page = 1;
     var start_offset = (page - 1) * limit;
     Promise.all([post.GetPostByUser(id),
-    post.countGetPostByUser(id)
+    post.countGetPostByUser(start_offset, id)
     ]).then(([post, Ctotal]) => {
-        if (post) {
-            var postchunks = [];
-            var size = 2;
-            for (var i = 0; i < post.length; i += size) {
-                postchunks.push(post.slice(i, i + size));
-            }
+        var postchunks = [];
+        var size = 2;
+        for (var i = 0; i < post.length; i += size) {
+            postchunks.push(post.slice(i, i + size));
         }
         var total = new Number();
         total = Ctotal;
@@ -42,7 +40,7 @@ routes.get('/loadpost', writerRestricted, (req, res, next) => {
                 active: i === +page
             })
         }
-        res.render('viewWriter/loadlistpost',{
+        res.render('viewWriter/loadlistpost', {
             post: postchunks,
             page_numbers
         });

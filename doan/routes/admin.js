@@ -41,7 +41,7 @@ routes.get('/adminControl/qlbv', adminRetricted, (req, res, next) => {
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var start_offset = (page - 1) * limit;
-    Promise.all([post.getAllNotApproved(), post.countGetNotApproved()]).then(([post, Ctotal]) => {
+    Promise.all([post.getAllNotApproved(start_offset), post.countGetNotApproved()]).then(([post, Ctotal]) => {
         if (post) {
             var postchunks = [];
             var size = 1;
@@ -54,7 +54,7 @@ routes.get('/adminControl/qlbv', adminRetricted, (req, res, next) => {
         var nPage = new Number();
         console.log(Math.floor(total / limit));
         nPage = Math.floor(total / limit);
-        if (total % limit > 0)
+        if (total % limit >= 0)
             nPages = nPage + 1;
         var page_numbers = [];
         for (var i = 1; i <= nPages; i++) {
@@ -64,11 +64,11 @@ routes.get('/adminControl/qlbv', adminRetricted, (req, res, next) => {
             })
         }
         if (postchunks)
-            res.render('adminAppro', {
+            res.render('viewAdmin/adminAppro', {
                 post: postchunks,
                 page_numbers
             });
-        else res.render('/views/viewAdmin/adminAppro');
+        else res.render('viewAdmin/adminAppro');
     }).catch((err) => next(err))
 })
 
@@ -76,7 +76,7 @@ routes.get('/adminControl/qlpost', adminRetricted, (req, res, next) => {
     var page = req.query.page || 1;
     if (page < 1) page = 1;
     var start_offset = (page - 1) * limit;
-    Promise.all([post.getAllApprovedAd(), post.countGetApprovedAd()]).then(([post, Ctotal]) => {
+    Promise.all([post.getAllApprovedAd(start_offset), post.countGetApprovedAd()]).then(([post, Ctotal]) => {
         if (post) {
             var postchunks = [];
             var size = 1;
@@ -89,7 +89,7 @@ routes.get('/adminControl/qlpost', adminRetricted, (req, res, next) => {
         var nPage = new Number();
         console.log(Math.floor(total / limit));
         nPage = Math.floor(total / limit);
-        if (total % limit > 0)
+        if (total % limit >= 0)
             nPages = nPage + 1;
         var page_numbers = [];
         for (var i = 1; i <= nPages; i++) {
@@ -120,6 +120,6 @@ routes.get('/approved/:id', adminRetricted, (req, res, next) => {
 })
 
 routes.get('/adminControl/qleditor', adminRetricted, (req, res, next) => {
-    res.render('/views/viewAdmin/qlEditor');
+    res.render('viewAdmin/qlEditor');
 })
 module.exports = routes;

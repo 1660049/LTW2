@@ -114,12 +114,12 @@ module.exports.countTag = function(date, tagName){
     })
 }
 //
-module.exports.GetPostByUser = function(idUser){
+module.exports.GetPostByUser = function(start_offset,idUser){
     return new Promise((resolve,reject)=>{
         post.find({idAuther: idUser},(err,docs)=>{
             if(err) reject(err);
             resolve(docs);
-        })
+        }).limit(6).skip(start_offset);
     })
 }
 module.exports.countGetPostByUser = function(idUser){
