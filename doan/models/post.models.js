@@ -132,12 +132,12 @@ module.exports.countGetPostByUser = function(idUser){
 }
 
 //editor
-module.exports.getAllNotApproved = ()=>{
+module.exports.getAllNotApproved = (start_offset)=>{
     return new Promise((resolve,reject)=>{
         post.find({duyet: false},(err,docs)=>{
             if(err) reject(err);
             resolve(docs);
-        })
+        }).limit(6).skip(start_offset);
     })
 }
 module.exports.countGetNotApproved = ()=>{
@@ -148,20 +148,24 @@ module.exports.countGetNotApproved = ()=>{
         })
     })
 }
-// module.exports.getApprovedPostByEditor = (id)=>{
-//     return new Promise((resolve,reject)=>{
-//         post.aggregate({$lookup: {
-//             from: 'approved',
-//             localField: 'idPost',
-//             foreignField: '_id',
-//             as: '_id'
-//         }}).find()
-//     })
-// }
 
-//categories
-
-
+//admin 
+module.exports.getAllApprovedAd = (start_offset)=>{
+    return new Promise((resolve,reject)=>{
+        post.find({duyet: true},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        }).limit(6).skip(start_offset);
+    })
+}
+module.exports.countGetApprovedAd = ()=>{
+    return new Promise((resolve,reject)=>{
+        post.count({duyet: true},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        })
+    })
+}
 
 module.exports.getAllByCatName = (catName)=>{
     return new Promise((resolve,reject)=>{

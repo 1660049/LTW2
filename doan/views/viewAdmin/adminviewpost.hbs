@@ -1,0 +1,46 @@
+{{#section 'js'}}
+<script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            removePlugins: ['Heading', 'Link'],
+            toolbar: []
+        })
+        .then(editor => {
+            editor.isReadOnly = true;
+            window.editor = editor;
+        })
+        .catch(err => {
+            console.error(err.stack);
+        });
+
+</script>
+</script>
+{{/section}}
+<header id="header">
+    <div id="post-header" class="page-header">
+        <div class="background-img" style="background-image: url('{{post.img}}');"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>{{post.tieuDe}}</h1>
+                    <div class="post-meta">
+                        <a class="post-category cat-1" href="#">{{post.chuyenMuc}}</a>
+                        <a class="post-category cat-4" href="#">{{post.tag}}</a>
+                        <span class="post-date">{{h_dateformat post.ngayDang}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="main-post">
+                <textarea name="content" id="editor">{{{post.content}}} </textarea>
+            </div>
+            <a href="/admin/approved/{{post._id}}" class="btn btn-secondary btn-lg btn-block">Duyệt</a>
+        </div>
+    </div>
+</div>

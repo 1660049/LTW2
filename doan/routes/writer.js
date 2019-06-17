@@ -10,7 +10,7 @@ var writerRestricted = require('../middlewares/writerRestricted');
 var limit = new Number();
 limit = 10;
 routes.get('/uppost', writerRestricted, (req, res, next) => {
-    res.render('uppost');
+    res.render('viewWriter/uppost');
 })
 
 routes.get('/loadpost', writerRestricted, (req, res, next) => {
@@ -42,7 +42,7 @@ routes.get('/loadpost', writerRestricted, (req, res, next) => {
                 active: i === +page
             })
         }
-        res.render('loadlistpost',{
+        res.render('viewWriter/loadlistpost',{
             post: postchunks,
             page_numbers
         });
