@@ -5,7 +5,6 @@ var Users = require('../models/users.models');
 var post = require('../models/post.models');
 var passport = require('passport');
 
-
 var writerRestricted = require('../middlewares/writerRestricted');
 var limit = new Number();
 limit = 6;

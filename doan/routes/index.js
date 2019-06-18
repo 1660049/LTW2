@@ -134,7 +134,7 @@ routes.get('/categories/:catName', (req, res, next) => {
         total = countCat;
         var nPage = new Number();
         nPage = Math.floor(total / limit);
-        if (total % limit <= 0)
+        if (total % limit >= 0)
             nPages = nPage + 1;
         var page_numbers = [];
         for (var i = 1; i < nPages; i++) {
@@ -173,10 +173,9 @@ routes.get('/tags/:tagName', (req, res, next) => {
     ]).then(([postN, countTag]) => {
         var total = new Number();
         total = countTag;
-        console.log(total);
         var nPage = new Number();
         nPage = Math.floor(total / limit);
-        if (total % limit <= 0)
+        if (total % limit >= 0)
             nPages = nPage + 1;
         var page_numbers = [];
         for (var i = 1; i < nPages; i++) {
@@ -185,12 +184,10 @@ routes.get('/tags/:tagName', (req, res, next) => {
                 active: i === +page
             })
         }
-        if (postN) {
-            var postNchunks = [];
-            var Nsize = 2;
-            for (var i = 0; i < postN.length; i += Nsize) {
-                postNchunks.push(postN.slice(i, i + Nsize));
-            }
+        var postNchunks = [];
+        var Nsize = 2;
+        for (var i = 0; i < postN.length; i += Nsize) {
+            postNchunks.push(postN.slice(i, i + Nsize));
         }
         res.render('tag', {
             post: postNchunks,
@@ -221,5 +218,17 @@ routes.post('/comment', (req, res, next) => {
         res.redirect(`/post/${req.body.id}`);
     })
 })
+
+routes.post('/resreach', (req, res, next) => {
+    
+    var keyword = req.body.key;
+    Promise.all([postModel.SreachByKey(keyword), postModel.countSreachByKey(keyword)]).then(([resultForKey, countResult]) => {
+        res.render('result',{
+            resultForKey,
+            countResult,
+        })
+    }).catch(err => {next(err)});
+})
+
 
 module.exports = routes;

@@ -21,7 +21,7 @@ var post = module.exports = mongoose.model('post', postSchema);
 module.exports.addPost = function (newPost, callback) {
     newPost.save(callback);
 }
-
+//dashboard
 //Lấy post mới nhất
 module.exports.getRecentPost = function (date) {
     return new Promise((resolve, reject) => {
@@ -87,7 +87,7 @@ module.exports.countCat = function (date, catName) {
         })
     })
 }
-//
+//tag
 module.exports.findAllWithTagName = function (date, tagName, start_offset) {
     return new Promise((resolve, reject) => {
         post.find({ "ngayDang": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
@@ -205,6 +205,24 @@ module.exports.approvedPost = (id) => {
     return new Promise((resolve, reject) => {
         post.findByIdAndUpdate(id, { $set: { "duyet": true } }, (err, docs) => {
             if (err) reject(err);
+            resolve(docs);
+        })
+    })
+}
+
+//fulltextsreach
+module.exports.SreachByKey = (key)=>{
+    return new Promise((resolve,reject)=>{
+        post.find({ $text: { $search: key} },(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        });
+    })
+}
+module.exports.countSreachByKey = (key)=>{
+    return new Promise((resolve,reject)=>{
+        post.count({$text: {$search: key }},(err,docs)=>{
+            if(err) reject(err);
             resolve(docs);
         })
     })

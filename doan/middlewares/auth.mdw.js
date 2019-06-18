@@ -10,6 +10,9 @@ module.exports = (req, res, next)=> {
         if(user.role === 'editor'){
             res.locals.editor = true;
         }
+        if(user.role === 'admin'){
+            res.locals.admin = true;
+        }
     }
     next();
 }
