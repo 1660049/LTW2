@@ -31,6 +31,8 @@ module.exports = function (app) {
         idAuther: req.user._id,
         duyet: false,
         views: 0,
+        ngayXuatBan: req.body.ngayDang,
+        editor: null
       });
       postUser.addPost(newPost, (err, post) => {
         if (err) return res.json({ error: err.message });

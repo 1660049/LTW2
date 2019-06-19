@@ -22,12 +22,13 @@
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active" style="background-image: url('/public/img/ca.jpg')">
+             <div class="carousel-item active" style="background-image: url('/public/img/ca.jpg')">
                 <div class="carousel-caption d-none d-md-block">
                     <h3>First Slide</h3>
                     <p>This is a description for the first slide.</p>
                 </div>
             </div>
+           
             <!-- Slide Two - Set the background image for this slide in the line below -->
             <div class="carousel-item" style="background-image: url('/public/img/depvll.jpg')">
                 <div class="carousel-caption d-none d-md-block">
@@ -66,103 +67,93 @@
                             <h2>Bài viết mới</h2>
                         </div>
                     </div>
-                    {{#each post}}
-                    {{#each this}}
+                    {{#each this.post}}
+                    
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                     alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
-                                        href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
-                                    <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                                        href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                    <span class="post-date">{{h_dateformat ngayDang}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                                <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             </div>
                         </div>
                     </div>
-                    {{/each}}
-                    <div class="clearfix visible-md visible-lg"></div>
                     {{/each}}
                     <div class="col-md-12">
                         <div class="section-title">
                             <h2>Bài viết mới theo chuyên mục</h2>
                         </div>
                     </div>
-                    {{#each postTG}}
-                    {{#each this}}
+                    {{#each this.postTG}}
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                     alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
-                                        href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                                        href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
                                     <span class="post-date">{{h_dateformat this.ngayDang}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                                <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             </div>
                         </div>
                     </div>
-                    {{/each}}
                     {{/each}}
                     <div class="clearfix visible-md visible-lg"></div>
-                    {{#each postTE}}
-                    {{#each this}}
+                    {{#each this.postTE}}
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                     alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
-                                        href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
-                                    <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                                        href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                    <span class="post-date">{{h_dateformat ngayDang}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                                <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             </div>
                         </div>
                     </div>
                     {{/each}}
-                    {{/each}}
-                    {{#each postCN}}
-                    {{#each this}}
+                    {{#each this.postCN}}
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                     alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
-                                        href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
-                                    <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                                        href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                    <span class="post-date">{{h_dateformat ngayDang}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                                <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             </div>
                         </div>
                     </div>
-                    {{/each}}
                     {{/each}}
                     <div class="clearfix visible-md visible-lg"></div>
-                    {{#each postCD}}
-                    {{#each this}}
+                    {{#each this.postCD}}
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                     alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
-                                        href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
-                                    <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                                        href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                    <span class="post-date">{{h_dateformat ngayDang}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                                <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             </div>
                         </div>
                     </div>
-                    {{/each}}
                     {{/each}}
                     <div class="clearfix visible-md visible-lg"></div>
                 </div>
@@ -172,15 +163,13 @@
                     <div class="section-title">
                         <h2>Đọc nhiều</h2>
                     </div>
-                    {{#each postM}}
-                    {{#each this}}
+                    {{#each this.postM}}
                     <div class="post post-widget">
-                        <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}" alt=""></a>
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}" alt=""></a>
                         <div class="post-body">
-                            <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                            <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                         </div>
                     </div>
-                    {{/each}}
                     {{/each}}
                 </div>
                 <div class="aside-widget">
@@ -189,10 +178,10 @@
                     </div>
                     <div class="category-widget">
                         <ul>
-                            <li><a href="#" class="cat-1">Tin game<span>{{countTG}}</span></a></li>
-                            <li><a href="#" class="cat-2">Tin esport<span>{{countTE}}</span></a></li>
-                            <li><a href="#" class="cat-4">Cẩm nang<span>{{countCN}}</span></a></li>
-                            <li><a href="#" class="cat-3">Cộng đồng<span>{{countCD}}</span></a></li>
+                            <li><a href="/categories/Tin game" class="cat-1">Tin game<span>{{countTG}}</span></a></li>
+                            <li><a href="/categories/Tin Esport" class="cat-2">Tin esport<span>{{countTE}}</span></a></li>
+                            <li><a href="/categories/Cẩm nang" class="cat-4">Cẩm nang<span>{{countCN}}</span></a></li>
+                            <li><a href="/Categories/Cộng đồng" class="cat-3">Cộng đồng<span>{{countCD}}</span></a></li>
                         </ul>
                     </div>
                 </div>

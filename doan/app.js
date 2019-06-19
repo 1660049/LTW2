@@ -47,6 +47,13 @@ app.engine('hbs', exphdb({
             };
             return option.inverse(this);
         },
+        ifNull: (value1,option)=>{
+            if (value1 === null) {
+                return option.fn(this);
+            };
+            return option.inverse(this);
+        }
+        ,
         ifCon: (value1, option) => {
             if (value1 != 'admin') {
                 return option.fn(this);

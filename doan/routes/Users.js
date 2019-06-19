@@ -48,7 +48,9 @@ routes.post('/regist', (req, res, next) => {
 })
 
 routes.get('/profile', restricted, (req, res, next) => {
-    res.render('profile');
+    Users.findById(req.user._id,(err,docs)=>{
+        res.render('profile',{user: docs});
+    })
 })
 
 routes.post('/logout', (req, res, next) => {

@@ -2,33 +2,30 @@
     <div class="container">
         <div class="row"></div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="section-title">
                             <h2>{{tagName}}</h2>
                         </div>
                     </div>
-                    {{#each post}}
-                    {{#each this}}
-                    <div class="col-md-6">
+                    {{#each this.post}}
+                    <div class="col-md-4">
                         <div class="post">
-                            <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
+                            <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                     alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4"
-                                        href="/categories/{{this.chuyenMuc}}">{{this.chuyenMuc}}</a>
+                                        href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
                                     <a class="post-category cat-1"
-                                        href="/tags/{{this.tag}}">{{this.tag}}</a>
-                                    <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                                        href="/tags/{{tag}}">{{tag}}</a>
+                                    <span class="post-date">{{h_dateformat ngayDang}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
+                                <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             </div>
                         </div>
                     </div>
-                    {{/each}}
-                    <div class="clearfix visible-md visible-lg"></div>
                     {{/each}}
                     <div class="col-md-12">
                         <nav aria-label="Page navigation example">

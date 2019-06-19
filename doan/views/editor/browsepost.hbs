@@ -4,7 +4,7 @@
             
             {{#each post}}
             {{#each this}}
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="post">
                     <a class="post-img" href="/post/{{this._id}}"><img src="{{this.img}}"
                             alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
@@ -16,6 +16,7 @@
                         <h3 class="post-title"><a href="/post/{{this._id}}">{{this.tieuDe}}</a></h3>
                         <a class="btn btn-primary btn-lg btn-block" href="/editor/approved/{{this._id}}">Duyệt nhanh</a>
                         <a class="btn btn-secondary btn-lg btn-block" href="/editor/viewDetail/{{this._id}}">Xem chi tiết</a>
+                        <a class="btn btn-danger btn-lg btn-block" href="/editor/draft/{{this._id}}">Không được duyệt</a>
                     </div>
                 </div>
             </div>

@@ -145,11 +145,11 @@ routes.get('/viewDetail/:id', adminRetricted, (req, res, next) => {
 
 routes.get('/approved/:id', adminRetricted, (req, res, next) => {
     var idPost = req.params.id;
-    post.approvedPost(idPost).then((docs) => {
+    var name = req.user.userName
+    post.approvedPost(idPost,name).then((docs) => {
     }).catch(err => { throw err });
     res.redirect('/admin/adminControl/qlbv');
 })
-
 routes.get('/adminControl/qleditor', adminRetricted, (req, res, next) => {
    editorDetail.find((err, docs) => {
         res.render('viewAdmin/qlEditor', { user: docs });

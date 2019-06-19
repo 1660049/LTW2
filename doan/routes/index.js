@@ -27,58 +27,19 @@ routes.get('/', (req, res, next) => {
     postModel.countCat(date, tinEsport),
     postModel.countCat(date, camNang),
     postModel.countCat(date, congDong),
-    ]).then(([postN, postM, nPostTG, nPostTE, nPostCN, nPostCD, countTG, countTE, countCN, countCD]) => {
-        if (postN) {
-            var postNchunks = [];
-            var Nsize = 2;
-            for (var i = 0; i < postN.length; i += Nsize) {
-                postNchunks.push(postN.slice(i, i + Nsize));
-            }
-        }
-
-        if (postM) {
-            var postMchunks = [];
-            var Msize = 1;
-            for (var i = 0; i < postM.length; i += Msize) {
-                postMchunks.push(postM.slice(i, i + Msize));
-            }
-        }
-        if (nPostTG) {
-            var arrTG = [];
-            var arrsize = 1;
-            for (var i = 0; i < nPostTG.length; i += arrsize) {
-                arrTG.push(nPostTG.slice(i, i + arrsize));
-            }
-        }
-        if (nPostTE) {
-            var arrTE = [];
-            var arrsize = 1;
-            for (var i = 0; i < nPostTE.length; i += arrsize) {
-                arrTE.push(nPostTE.slice(i, i + arrsize));
-            }
-        }
-        if (nPostCN) {
-            var arrCN = [];
-            var arrsize = 1;
-            for (var i = 0; i < nPostCN.length; i += arrsize) {
-                arrCN.push(nPostCN.slice(i, i + arrsize));
-            }
-        }
-        if (nPostCD) {
-            var arrCD = [];
-            var arrsize = 1;
-            for (var i = 0; i < nPostCD.length; i += arrsize) {
-                arrCD.push(nPostCD.slice(i, i + arrsize));
-            }
-        }
+    postModel.getRecentPostHeader1(date),
+    postModel.getRecentPostHeader2(date),
+    postModel.getRecentPostHeader3(date),
+    ]).then(([postN, postM, nPostTG, nPostTE, nPostCN, nPostCD, countTG, countTE, countCN, countCD,postHeader1,postHeader2,postHeader3]) => {
         res.render('dashboard', {
-            post: postNchunks,
-            postM: postMchunks,
-            postTG: arrTG,
-            postTE: arrTE,
-            postCN: arrCN,
-            postCD: arrCD,
-            countTG, countTE, countCN, countCD
+            post: postN,
+            postM: postM,
+            postTG: nPostTG,
+            postTE: nPostTE,
+            postCN: nPostCN,
+            postCD: nPostCD,
+            countTG, countTE, countCN, countCD,
+            postHeader1
         });
     }).catch(err => { next(err) });
 })
@@ -107,14 +68,6 @@ routes.get('/post/:id', (req, res, next) => {
             })
         }).catch(error => res.json(error));
     }).catch((err) => { res.json(err) });
-    // postModel.SingleID(id).then((docs) => {
-    //     var slviews = Number;
-    //     slviews = docs.views + 1;
-
-    //     postModel.findByIdAndUpdate(id, { $set: { views: slviews } }, (err, docs) => {
-    //         res.render('post', { post: docs });
-    //     })
-    // }).catch((err) => { res.end(err) });
 })
 
 routes.get('/categories/:catName', (req, res, next) => {
@@ -184,13 +137,8 @@ routes.get('/tags/:tagName', (req, res, next) => {
                 active: i === +page
             })
         }
-        var postNchunks = [];
-        var Nsize = 2;
-        for (var i = 0; i < postN.length; i += Nsize) {
-            postNchunks.push(postN.slice(i, i + Nsize));
-        }
         res.render('tag', {
-            post: postNchunks,
+            post: postN,
             page_numbers,
             tagName
         })

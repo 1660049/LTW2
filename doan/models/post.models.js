@@ -13,6 +13,8 @@ var postSchema = mongoose.Schema({
     idAuther: String,
     duyet: Boolean,
     views: Number,
+    ngayXuatBan: Date,
+    editor: String
 })
 
 
@@ -25,18 +27,44 @@ module.exports.addPost = function (newPost, callback) {
 //Lấy post mới nhất
 module.exports.getRecentPost = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "duyet": true }, (err, docs) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             //console.log(docs);
             resolve(docs);
         }).sort({ ngayDang: -1 }).limit(10);
     })
-
+}
+module.exports.getRecentPostHeader1 = function (date) {
+    return new Promise((resolve, reject) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+            if (err) reject(err);
+            //console.log(docs);
+            resolve(docs);
+        }).sort({ ngayDang: -1 }).limit(3).skip(0);
+    })
+}
+module.exports.getRecentPostHeader2 = function (date) {
+    return new Promise((resolve, reject) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+            if (err) reject(err);
+            //console.log(docs);
+            resolve(docs);
+        }).sort({ ngayDang: -1 }).limit(3).skip(1);
+    })
+}
+module.exports.getRecentPostHeader3 = function (date) {
+    return new Promise((resolve, reject) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+            if (err) reject(err);
+            //console.log(docs);
+            resolve(docs);
+        }).sort({ ngayDang: -1 }).limit(3).skip(2);
+    })
 }
 //lấy post nhiều view nhất
 module.exports.getMostViewsPost = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "duyet": true }, (err, docs) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         }).sort({ views: -1 }).limit(10);
@@ -63,7 +91,7 @@ module.exports.SingleID = function (id) {
 //load theo categories cho dashboard
 module.exports.findCategories = function (date, catName) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "chuyenMuc": catName, "duyet": true }, (err, docs) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "chuyenMuc": catName, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         }).limit(2).sort({ ngayDang: -1 });
@@ -72,7 +100,7 @@ module.exports.findCategories = function (date, catName) {
 //Load all categories
 module.exports.findAllCategories = function (date, catName, start_offset) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "chuyenMuc": catName, "duyet": true }, (err, docs) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "chuyenMuc": catName, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         }).sort({ ngayDang: -1 }).limit(6).skip(start_offset);
@@ -81,7 +109,7 @@ module.exports.findAllCategories = function (date, catName, start_offset) {
 //Count all categories
 module.exports.countCat = function (date, catName) {
     return new Promise((resolve, reject) => {
-        post.count({ "ngayDang": { $lte: date }, "chuyenMuc": catName, "duyet": true }, (err, docs) => {
+        post.count({ "ngayXuatBan": { $lte: date }, "chuyenMuc": catName, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         })
@@ -90,7 +118,7 @@ module.exports.countCat = function (date, catName) {
 //tag
 module.exports.findAllWithTagName = function (date, tagName, start_offset) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         }).sort({ ngayDang: -1 }).limit(6).skip(start_offset);
@@ -98,7 +126,7 @@ module.exports.findAllWithTagName = function (date, tagName, start_offset) {
 }
 module.exports.GetPostWithTagName = function (date, tagName) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayDang": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
+        post.find({ "ngayXuatBan": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         }).sort({ ngayDang: -1 }).limit(10);
@@ -107,7 +135,7 @@ module.exports.GetPostWithTagName = function (date, tagName) {
 //
 module.exports.countTag = function (date, tagName) {
     return new Promise((resolve, reject) => {
-        post.count({ "ngayDang": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
+        post.count({ "ngayXuatBan": { $lte: date }, "tag": tagName, "duyet": true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
         })
@@ -144,6 +172,31 @@ module.exports.countGetNotApprovedEd = (categories) => {
     return new Promise((resolve, reject) => {
         post.count({ duyet: false,chuyenMuc: categories }, (err, docs) => {
             if (err) reject(err);
+            resolve(docs);
+        })
+    })
+}
+module.exports.approvedPost = (id,userEditor) => {
+    return new Promise((resolve, reject) => {
+        post.findByIdAndUpdate(id, { $set: { "duyet": true, "editor": userEditor } }, (err, docs) => {
+            if (err) reject(err);
+            resolve(docs);
+        })
+    })
+}
+module.exports.approvedPostDate = (id,userEditor,date)=>{
+    return new Promise((resolve,reject)=>{
+        post.findByIdAndUpdate(id, {$set: {"duyet": true, "ngayXuatBan": date, "editor": userEditor}},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        })
+    })
+}
+
+module.exports.getAllApprovedEd = (userEditor)=>{
+    return new Promise((resolve,reject)=>{
+        post.find({editor: userEditor, duyet: true},(err,docs)=>{
+            if(err) reject(err);
             resolve(docs);
         })
     })
@@ -201,14 +254,7 @@ module.exports.countGetAllByCatName = (catName) => {
 }
 
 
-module.exports.approvedPost = (id) => {
-    return new Promise((resolve, reject) => {
-        post.findByIdAndUpdate(id, { $set: { "duyet": true } }, (err, docs) => {
-            if (err) reject(err);
-            resolve(docs);
-        })
-    })
-}
+
 
 //fulltextsreach
 module.exports.SreachByKey = (key)=>{
@@ -227,3 +273,4 @@ module.exports.countSreachByKey = (key)=>{
         })
     })
 }
+

@@ -1,4 +1,12 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
 {{#section 'js'}}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
@@ -13,8 +21,16 @@
         .catch(err => {
             console.error(err.stack);
         });
-
 </script>
+<script>
+    $(function () {
+        $('#ngayXuatBan').datetimepicker({
+            // format: 'd/m/Y H:i'
+            format: 'Y/m/d',
+            timepicker: false,
+            mask: true,
+        });
+    })
 </script>
 {{/section}}
 <header id="header">
@@ -40,7 +56,16 @@
             <div class="main-post">
                 <textarea name="content" id="editor">{{{post.content}}} </textarea>
             </div>
-            <a href="/editor/approved/{{post._id}}" class="btn btn-secondary btn-lg btn-block">Duyệt</a>
+            <form action="/editor/approved/{{post._id}}" method="POST">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Chọn ngày xuất bản</span>
+                    </div>
+                    <input type="text" class="form-control" id="ngayXuatBan" name="ngayXuatBan">
+                    <button class="btn btn-secondary btn-lg btn-block" type="submit">Duyệt</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

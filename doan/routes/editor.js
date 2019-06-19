@@ -14,9 +14,30 @@ routes.use(require('../middlewares/auth.mdw'));
 
 routes.get('/approved/:id', editorRestricted, (req, res, next) => {
     var idPost = req.params.id;
-    post.approvedPost(idPost).then((docs) => {
+    var userEditor = req.user.userName;
+    post.approvedPost(idPost,userEditor).then((docs) => {
     }).catch(err => { throw err });
-    res.redirect('/editor/browsepost');
+    res.redirect('/editor/listapproved');
+})
+routes.post('/approved/:id', editorRestricted, (req,res,next)=>{
+    var idPost = req.params.id;
+    var userEditor = req.user.userName;
+    var date = req.body.ngayXuatBan;
+    post.approvedPostDate(idPost,userEditor,date).then((docs)=>{
+        res.redirect('/editor/listapproved');
+    }).catch(err=>{res.json(err)});
+})
+routes.get('/listapproved', editorRestricted,(req,res,next)=>{
+    var userEditor = req.user.userName;
+    post.getAllApprovedEd(userEditor).then((docs)=>{
+        res.render('editor/listPost',{post: docs});
+    }).catch(err=>{res.json(err)});
+})
+routes.get('/draft/:id', editorRestricted, (req, res, next) => {
+    var idPost = req.params.id;
+    post.findByIdAndUpdate(idPost, {$set: {duyet: null}},(callback)=>{
+        res.redirect('/editor/browsepost');
+    })
 })
 routes.get('/browsepost', editorRestricted, (req, res, next) => {
     var userName = req.user.userName;
