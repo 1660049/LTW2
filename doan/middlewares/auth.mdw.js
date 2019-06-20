@@ -1,3 +1,5 @@
+var cat = require('../models/categories.models');
+var tag = require('../models/tags.models');
 module.exports = (req, res, next)=> {
     if(req.user) {
         var user = req.user;
@@ -17,5 +19,11 @@ module.exports = (req, res, next)=> {
             res.locals.g_premium = true;
         }
     }
+    cat.getCat().then(docs=>{
+        res.locals.cat = docs;
+    }).catch(err=> {throw(err)});
+    tag.getTag().then(docs=>{
+        res.locals.tag = docs;
+    }).catch(err=>{throw(err)});
     next();
 }

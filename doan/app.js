@@ -9,7 +9,7 @@ var config = require('./config/database');
 var h_dateformat = require('helper-dateformat');
 var errorhandle = require('errorhandler');
 var createError = require('http-errors');
-
+var handlebars = require('handlebars');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(config.database, { useNewUrlParser: true }).then(() => console.log('MongoDB Connected'))
@@ -64,6 +64,14 @@ app.engine('hbs', exphdb({
         }
     }
 }));
+handlebars.registerHelper('if2', function(a, b, opts) {
+    if (a == b) {
+        return opts.fn(this);
+    } else {
+        return opts.inverse(this);
+    }
+});
+
 app.set('view engine', 'hbs');
 
 app.use(express.json());

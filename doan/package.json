@@ -19,6 +19,7 @@
     "express-handlebars": "^3.1.0",
     "express-handlebars-sections": "^1.0.1",
     "express-session": "^1.16.1",
+    "handlebars": "^4.1.2",
     "helper-dateformat": "^1.0.0",
     "http-errors": "^1.7.2",
     "moment": "^2.24.0",

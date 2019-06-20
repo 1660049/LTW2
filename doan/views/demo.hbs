@@ -1,0 +1,75 @@
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                    {{#each cat}}
+                    <li class="nav-item dropdown">
+                    <a class="nav-link" href="/categories/{{catName}}" id="navbarDropdown">
+                        {{catName}}
+                    </a>
+                    <div class="dropdown-content">
+                    {{#each ../tag}} 
+                        {{#if2 catParentName ../catName}}
+                            <a class="dropdown-item" href="/tags/{{tagName}}">{{tagName}}</a>
+                        {{/if2}}
+                    {{/each}}
+                    </div>
+                    {{/each}}
+                </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <a class="navbar-brand mx-auto" href="/">TH16 NEWS LMHT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <form action="/user/logout" id="frmLogout" method="POST"></form>
+            <ul class="navbar-nav ml-auto">
+                <form class="form-inline my-2 my-lg-0" action="/resreach" method="POST">
+                    <input class="form-control mr-sm-2" name="key" id="key" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                {{#if isAuthenticated }}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        Hi, <strong>{{authUser.userName}}</strong>
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="/user/profile">Cá nhân</a>
+                        {{#if writer}}
+                        <a class="dropdown-item" href="/writer/uppost">Thêm bài viết</a>
+                        <a class="dropdown-item" href="/writer/loadpost">Bài đã viết</a>
+                        <a class="dropdown-item" href="/writer/loadlistbitc">Bị từ chối</a>
+                        {{/if}}
+                        {{#if editor}}
+                        <a class="dropdown-item" href="/editor/browsepost">Danh sách bài viết đợi duyệt</a>
+                        <a class="dropdown-item" href="/editor/listapproved">Danh sách bài viết đã duyệt</a>
+                        {{/if}}
+                        {{#if admin}}
+                        <a class="dropdown-item" href="/admin/adminControl">Admin Control</a>
+                        {{/if}}
+                        <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">Đăng xuất</a>
+                    </div>
+                </div>
+                {{else}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/login">Login<i class="fas fa-headset"></i></a>
+                </li>
+                {{/if}}
+            </ul>
+        </div>
+    </nav>
+    {{{body}}}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/c356fe792c.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
+    {{{_sections.js}}}
+</body>

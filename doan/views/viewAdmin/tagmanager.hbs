@@ -1,0 +1,129 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-center mt-3">
+                <h1>QUẢN LÍ 16TH-NEWS-LMHT</h1>
+            </div>
+            <ul class="nav justify-content-center mt-3">
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/adminControl/qltk">Quản lí tài khoản</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/adminControl/renewed">Gia hạn subcriber</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/adminControl/qlbv">Duyệt bài</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/adminControl/qlpost">Quản lí bài viết đã được đăng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/adminControl/qleditor">Quản lí editor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/catManager">Quản lí Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info" href="/admin/tagManager">Quản lí Tag</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">tagName</th>
+                        <th scope="col">catParentName</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.tag}}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{tagName}}</td>
+                        <td>{{catParentName}}</td>
+                        {{!-- <a href="/admin/adminControl/editRoleWriter/{{_id}}" class="btn btn-outline-info ">Writer</a>
+              <a href="/admin/adminControl/editRoleEditor/{{_id}}" class="btn btn-outline-success ">Editor</a>
+              <a href="/admin/adminControl/editRoleG_premium/{{_id}}" class="btn btn-outline-info ">Subcriber</a> --}}
+
+                        <td>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#edit{{_id}}"><i
+                                    class="far fa-edit"></i>Edit</button>
+                            <div class="modal fade" id="edit{{_id}}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Tag</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="/admin/tag/edit/{{_id}}" method="POST">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="tagName"
+                                                        id="exampleFormControlInput1" placeholder="{{tagName}}">
+                                                    <input type="text" class="form-control mt-2" name="catParentName"
+                                                        id="exampleFormControlInput1" placeholder="categories"
+                                                        value="{{catParentName}}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="/admin/tag/delete/{{_id}}" class="btn btn-danger"><i
+                                    class="fas fa-trash"></i>Delte</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div class="text-right">
+                <button class="btn btn-success" data-toggle="modal" data-target="#addTag"><i
+                        class="fas fa-plus"></i>Add</button>
+                <div class="modal fade" id="addTag" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Thêm tag mới</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="/admin/tag/add" method="POST">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="text" name="tagName" class="form-control"
+                                            id="exampleFormControlInput1" placeholder="Tên tag mới">
+                                        <label>Categories</label>
+                                        <select class="form-control" name="cat">
+                                            {{#each this.cat}}
+                                            <option value="{{catName}}">{{catName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
