@@ -4,8 +4,16 @@ var editorDetail = mongoose.Schema({
     chuyenMucPTrach: String,
 })
 
-module.exports = mongoose.model('editorDetail',editorDetail);
+var e = module.exports = mongoose.model('editorDetail',editorDetail);
 
 module.exports.addEditor = (newEditor,callback)=>{
     newEditor.save(callback);
+}
+module.exports.updateEditor = (userName, chuyenMucPTrach)=>{
+    return new Promise((resolve,reject)=>{
+        e.findOneAndUpdate({userNameEditor: userName},{$set: {chuyenMucPTrach: chuyenMucPTrach}},(err,docs)=>{
+            if(err) reject (err);
+            resolve(docs);
+        })
+    })
 }

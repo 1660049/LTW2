@@ -12,6 +12,37 @@ routes.get('/uppost', writerRestricted, (req, res, next) => {
     res.render('viewWriter/uppost');
 })
 
+routes.get('/loadlistbitc',writerRestricted,(req,res,next)=>{
+    var id = req.user._id;
+    Promise.all([post.GetPostByUserTC(id)
+    ]).then(([post]) => {
+        res.render('viewWriter/loadlistbitc', {
+            post
+        });
+    }).catch(err=>{next(err)});
+})
+routes.get('/updatepost/:id',writerRestricted, (req,res,next)=>{
+    var idpost = req.params.id;
+    post.findById(idpost,(err,docs)=>{
+        res.render('viewWriter/updatePost',{docs});
+    })
+})
+routes.post('/editPost/:id',writerRestricted, (req,res,next)=>{
+    var idPost = req.params.id;
+    var Post = ({
+        tieuDe: req.body.tieuDe,
+        chuyenMuc: req.body.chuyenMuc,
+        tag: req.body.tag,
+        ngayDang: req.body.ngayDang,
+        abtract: req.body.abtract,
+        content: req.body.content,
+        idAuther: req.user._id,
+        ngayXuatBan: req.body.ngayDang,
+      });
+      post.findByIdAndUpdate(idPost,{$set: Post},(err,docs)=>{
+          res.redirect('/writer/loadpost');
+      })
+})
 routes.get('/loadpost', writerRestricted, (req, res, next) => {
     var id = req.user._id;
     console.log(id);

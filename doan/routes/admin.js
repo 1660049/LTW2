@@ -9,33 +9,37 @@ var limit = new Number();
 limit = 10;
 
 routes.get('/adminControl/editCategoriesTinGame/:userName', (req, res, next) => {
+    var chuyenMucPTrach = 'Tin game'
     var userName = req.params.userName;
-    editorDetail.findByIdAndUpdate({ "userNameEditor": userName }, { $set: { "chuyenMucPTrach": "Tin game" } }, (err, callback) => {
+    editorDetail.updateEditor(userName,chuyenMucPTrach).then(docs=>{
         res.redirect('/admin/adminControl/qleditor');
-    })
+    }).catch((err)=>{next(err)})
 })
 
 
 
 routes.get('/adminControl/editCategoriesTinEsport/:userName', (req, res, next) => {
+    var chuyenMucPTrach = 'Tin esport'
     var userName = req.params.userName;
-    editorDetail.findByIdAndUpdate({ "userNameEditor": userName }, { $set: { "chuyenMucPTrach": "Tin esport" } }, (err, callback) => {
+    editorDetail.updateEditor(userName,chuyenMucPTrach).then(docs=>{
         res.redirect('/admin/adminControl/qleditor');
-    })
+    }).catch((err)=>{next(err)})
 })
 
 routes.get('/adminControl/editCategoriesCamNang/:userName', (req, res, next) => {
+    var chuyenMucPTrach = 'Cẩm nang'
     var userName = req.params.userName;
-    editorDetail.findByIdAndUpdate({ "userNameEditor": userName }, { $set: { "chuyenMucPTrach": "Cẩm nang" } }, (err, callback) => {
+    editorDetail.updateEditor(userName,chuyenMucPTrach).then(docs=>{
         res.redirect('/admin/adminControl/qleditor');
-    })
+    }).catch((err)=>{next(err)})
 })
 
 routes.get('/adminControl/editCategoriesCongDong/:userName', (req, res, next) => {
+    var chuyenMucPTrach = 'Cộng đồng'
     var userName = req.params.userName;
-    editorDetail.findByIdAndUpdate({ "userNameEditor": userName }, { $set: { "chuyenMucPTrach": "Cộng đồng" } }, (err, callback) => {
+    editorDetail.updateEditor(userName,chuyenMucPTrach).then(docs=>{
         res.redirect('/admin/adminControl/qleditor');
-    })
+    }).catch((err)=>{next(err)})
 })
 
 routes.get('/adminControl', adminRetricted, (req, res, next) => {

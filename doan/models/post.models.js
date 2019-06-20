@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
 mongoose.Promise = Promise;
 
 var postSchema = mongoose.Schema({
@@ -165,6 +164,22 @@ module.exports.GetPostByUser = function (start_offset, idUser) {
 module.exports.countGetPostByUser = function (idUser) {
     return new Promise((resolve, reject) => {
         post.count({ "idAuther": idUser }, (err, total) => {
+            if (err) reject(err);
+            if (total) resolve(total);
+        })
+    })
+}
+module.exports.GetPostByUserTC = function (idUser) {
+    return new Promise((resolve, reject) => {
+        post.find({ "idAuther": idUser, duyet: null}, (err, docs) => {
+            if (err) reject(err);
+            resolve(docs);
+        });
+    })
+}
+module.exports.countGetPostByUserTC = function (idUser) {
+    return new Promise((resolve, reject) => {
+        post.count({ "idAuther": idUser, duyet: null}, (err, total) => {
             if (err) reject(err);
             if (total) resolve(total);
         })
