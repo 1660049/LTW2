@@ -7,6 +7,8 @@ var hbs_section = require('express-handlebars-sections');
 var moment = require('moment');
 var config = require('./config/database');
 var h_dateformat = require('helper-dateformat');
+var errorhandle = require('errorhandler');
+var createError = require('http-errors');
 
 
 mongoose.set('useCreateIndex', true);
@@ -47,7 +49,7 @@ app.engine('hbs', exphdb({
             };
             return option.inverse(this);
         },
-        ifNull: (value1,option)=>{
+        ifNull: (value1, option) => {
             if (value1 === null) {
                 return option.fn(this);
             };
@@ -77,10 +79,44 @@ var writerRouter = require('./routes/writer');
 app.use('/writer', writerRouter);
 
 var editorRouter = require('./routes/editor');
-app.use('/editor',editorRouter);
+app.use('/editor', editorRouter);
 
 var adminRouter = require('./routes/admin');
-app.use('/admin',adminRouter);
+app.use('/admin', adminRouter);
+app.get('/error', (req, res) => {
+    res.render('error', { layout: false });
+})
+
+app.use((req, res, next) => {
+    next(createError(404));
+})
+
+app.use((err, req, res, next) => {
+
+    var status = err.status || 500;
+    var vwErr = 'error';
+
+    if (status === 404) {
+        vwErr = '404';
+    }
+
+    // app.set('env', 'prod');
+    // var isProd = app.get('env') === 'prod';
+
+    process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+    var isProd = process.env.NODE_ENV === 'prod';
+    var message = isProd ? 'An error has occured. Please contact administartor for more support.' : err.message;
+    var error = isProd ? {} : err;
+
+    var message = isProd ? 'An error has occured. Please contact administartor for more support.' : err.message;
+    var error = isProd ? {} : err;
+
+    res.status(status).render(vwErr, {
+        layout: false,
+        message,
+        error
+    });
+})
 
 var port = 3000;
 app.listen(port, () => {
