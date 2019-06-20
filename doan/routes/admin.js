@@ -4,6 +4,8 @@ var userModel = require('../models/users.models');
 var post = require('../models/post.models');
 var adminRetricted = require('../middlewares/adminRetricted');
 var editorDetail = require('../models/editorDetail.models');
+var tag = require('../models/tags.models');
+var cat = require('../models/categories.models');
 var expPre = require('../models/g_premium.models');
 var limit = new Number();
 limit = 10;
@@ -16,7 +18,68 @@ routes.get('/adminControl/editCategoriesTinGame/:userName', (req, res, next) => 
     }).catch((err)=>{next(err)})
 })
 
+routes.get('/tagManager',adminRetricted,(req,res,next)=>{
+    tag.find((err,docs)=>{
+        cat.find((err,cat)=>{
+            res.render('viewAdmin/tagmanager',{
+                tag: docs,
+                cat
+            })
+        })
+    })
+})
+routes.get('/catManager',adminRetricted,(req,res,next)=>{
+    cat.find((err,docs)=>{
+        res.render('viewAdmin/catmanager',{
+            cat: docs
+        })
+    })
+})
 
+routes.post('/tag/add',adminRetricted,(req,res,next)=>{
+    console.log(req.body);
+    var newtag = new tag({
+        catParentName: req.body.cat,
+        tagName: req.body.tagName
+    })
+    newtag.save((err,docs)=>{
+        res.redirect('/admin/tagManager')
+    })
+})
+routes.post('/tag/edit/:id',adminRetricted,(req,res,next)=>{
+    var idTag = req.params.id;
+    tag.findByIdAndUpdate(idTag,{$set: {catParentName: req.body.catParentName,tagName: req.body.tagName}},(err,docs)=>{
+        res.redirect('/admin/tagManager')
+    })
+})
+routes.get('/tag/delete/:id',adminRetricted,(req,res,next)=>{
+    var idTag = req.params.id;
+    tag.findByIdAndDelete(idTag,(err,docs)=>{
+        res.redirect('/admin/tagManager')
+    })
+})
+
+routes.post('/cat/add',adminRetricted,(req,res,next)=>{
+    console.log(req.body);
+    var newCat = new cat({
+        catName: req.body.catName
+    })
+    newCat.save((err,docs)=>{
+        res.redirect('/admin/catManager')
+    })
+})
+routes.post('/cat/edit/:id',adminRetricted,(req,res,next)=>{
+    var idCat = req.params.id;
+    cat.findByIdAndUpdate(idCat,{$set: {catName: req.body.catName}},(err,docs)=>{
+        res.redirect('/admin/catManager')
+    })
+})
+routes.get('/cat/delete/:id',adminRetricted,(req,res,next)=>{
+    var idCat = req.params.id;
+    cat.findByIdAndDelete(idCat,(err,docs)=>{
+        res.redirect('/admin/catManager')
+    })
+})
 
 routes.get('/adminControl/editCategoriesTinEsport/:userName', (req, res, next) => {
     var chuyenMucPTrach = 'Tin esport'

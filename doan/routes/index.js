@@ -4,6 +4,8 @@ var restricted = require('../middlewares/restricted');
 var postModel = require('../models/post.models');
 var commentModel = require('../models/comment.models');
 var userModel = require('../models/users.models');
+var catModel = require('../models/categories.models');
+var tagModel = require('../models/tags.models');
 var g_premiumRetricted = require('../middlewares/g_premiumRetricted');
 var date = new Date();
 var date = date.toISOString();
@@ -15,6 +17,17 @@ var limit = new Number();
 limit = 6;
 var date = new Date();
 var date = date.toISOString();
+
+routes.get('/demo',(req,res,next)=>{
+    Promise.all([catModel.getCat(),tagModel.getTag()]).then(([cat,tag])=>{
+        console.log(tag);
+        res.render('demo',{
+            cat, 
+            tag
+        });
+    }).catch(err=>{next(err)});
+})
+
 routes.get('/', (req, res, next) => {
     Promise.all([postModel.getRecentPost(date),
     postModel.getPremiumPost(date),
