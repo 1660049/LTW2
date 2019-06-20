@@ -18,15 +18,6 @@ limit = 6;
 var date = new Date();
 var date = date.toISOString();
 
-routes.get('/demo',(req,res,next)=>{
-    Promise.all([catModel.getCat(),tagModel.getTag()]).then(([cat,tag])=>{
-        console.log(tag);
-        res.render('demo',{
-            cat, 
-            tag
-        });
-    }).catch(err=>{next(err)});
-})
 
 routes.get('/', (req, res, next) => {
     Promise.all([postModel.getRecentPost(date),
