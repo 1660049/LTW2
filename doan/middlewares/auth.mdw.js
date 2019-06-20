@@ -13,6 +13,9 @@ module.exports = (req, res, next)=> {
         if(user.role === 'admin'){
             res.locals.admin = true;
         }
+        if(user.role === 'g_premium'){
+            res.locals.g_premium = true;
+        }
     }
     next();
 }

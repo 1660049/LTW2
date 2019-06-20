@@ -32,7 +32,8 @@
             <th scope="col">UserName</th>
             <th scope="col">Email</th>
             <th scope="col">Phân quyền</th>
-            <th scope="col">Sửa quyền</th>
+            <th scope="col">Hết hạn</th>
+            <th scope="col">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -43,9 +44,10 @@
             <td>{{email}}</td>
             <td>{{role}}</td>
             <td>
-              <a href="/admin/adminControl/editRoleWriter/{{_id}}" class="btn btn-outline-info ">Writer</a>
-              <a href="/admin/adminControl/editRoleEditor/{{_id}}" class="btn btn-outline-success ">Editor</a>
-              <a href="/admin/adminControl/editRoleG_premium/{{_id}}" class="btn btn-outline-info ">Subcriber</a>
+              Đã hết hạn
+            </td>
+            <td>
+                <a href="admin/renews/{{userName}}" class="btn btn-outline-primary">Gia hạn</a>
             </td>
           </tr>
           {{/each}}

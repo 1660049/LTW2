@@ -14,7 +14,8 @@ var postSchema = mongoose.Schema({
     duyet: Boolean,
     views: Number,
     ngayXuatBan: Date,
-    editor: String
+    editor: String,
+    premium: Boolean
 })
 
 
@@ -27,38 +28,49 @@ module.exports.addPost = function (newPost, callback) {
 //Lấy post mới nhất
 module.exports.getRecentPost = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+        post.find({ ngayXuatBan: { $lte: date }, duyet: true }, (err, docs) => {
             if (err) reject(err);
-            //console.log(docs);
             resolve(docs);
         }).sort({ ngayDang: -1 }).limit(10);
     })
 }
+
+
+module.exports.getPremiumPost = function(date){
+    return new Promise((resolve,reject)=>{
+        post.find({ngayXuatBan: {$lte: date}, duyet: true, premium: true},(err,docs)=>{
+            if(err) reject(err);
+            resolve(docs);
+        }).sort({ngayDang: -1}).limit(9);
+    })
+}
+
+
 module.exports.getRecentPostHeader1 = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+        post.findOne({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
             if (err) reject(err);
-            //console.log(docs);
+            
             resolve(docs);
-        }).sort({ ngayDang: -1 }).limit(3).skip(0);
+        }).sort({ views: -1 }).skip(0);
     })
 }
 module.exports.getRecentPostHeader2 = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+        post.findOne({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
             if (err) reject(err);
-            //console.log(docs);
+            
             resolve(docs);
-        }).sort({ ngayDang: -1 }).limit(3).skip(1);
+        }).sort({   views: -1 }).skip(1);
     })
 }
 module.exports.getRecentPostHeader3 = function (date) {
     return new Promise((resolve, reject) => {
-        post.find({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
+        post.findOne({ "ngayXuatBan": { $lte: date }, "duyet": true }, (err, docs) => {
             if (err) reject(err);
-            //console.log(docs);
+            
             resolve(docs);
-        }).sort({ ngayDang: -1 }).limit(3).skip(2);
+        }).sort({ views: -1}).skip(2);
     })
 }
 //lấy post nhiều view nhất
@@ -219,12 +231,12 @@ module.exports.countGetNotApproved = () => {
         })
     })
 }
-module.exports.getAllApprovedAd = (start_offset) => {
+module.exports.getAllApprovedAd = () => {
     return new Promise((resolve, reject) => {
         post.find({ duyet: true }, (err, docs) => {
             if (err) reject(err);
             resolve(docs);
-        }).limit(6).skip(start_offset);
+        });
     })
 }
 module.exports.countGetApprovedAd = () => {

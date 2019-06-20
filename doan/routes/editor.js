@@ -33,10 +33,24 @@ routes.get('/listapproved', editorRestricted,(req,res,next)=>{
         res.render('editor/listPost',{post: docs});
     }).catch(err=>{res.json(err)});
 })
+
+routes.get('/updatePrePost/:id', editorRestricted,(req,res,next)=>{
+    var idPost = req.params.id;
+    post.findByIdAndUpdate(idPost,{$set: {premium: true}},(err,docs)=>{
+        res.redirect('/editor/listapproved');
+    });
+})
+
+routes.get('/updatePost/:id', editorRestricted,(req,res,next)=>{
+    var idPost = req.params.id;
+    post.findByIdAndUpdate(idPost,{$set: {premium: false}},(err,docs)=>{
+        res.redirect('/editor/browsepost');
+    });
+})
 routes.get('/draft/:id', editorRestricted, (req, res, next) => {
     var idPost = req.params.id;
     post.findByIdAndUpdate(idPost, {$set: {duyet: null}},(callback)=>{
-        res.redirect('/editor/browsepost');
+        res.redirect('/editor/listapproved');
     })
 })
 routes.get('/browsepost', editorRestricted, (req, res, next) => {

@@ -4,8 +4,7 @@ var restricted = require('../middlewares/restricted');
 var postModel = require('../models/post.models');
 var commentModel = require('../models/comment.models');
 var userModel = require('../models/users.models');
-var moment = require('moment');
-var mongoose = require('mongoose');
+var g_premiumRetricted = require('../middlewares/g_premiumRetricted');
 var date = new Date();
 var date = date.toISOString();
 var tinGame = "Tin game";
@@ -18,6 +17,7 @@ var date = new Date();
 var date = date.toISOString();
 routes.get('/', (req, res, next) => {
     Promise.all([postModel.getRecentPost(date),
+    postModel.getPremiumPost(date),
     postModel.getMostViewsPost(date),
     postModel.findCategories(date, tinGame),
     postModel.findCategories(date, tinEsport),
@@ -30,8 +30,10 @@ routes.get('/', (req, res, next) => {
     postModel.getRecentPostHeader1(date),
     postModel.getRecentPostHeader2(date),
     postModel.getRecentPostHeader3(date),
-    ]).then(([postN, postM, nPostTG, nPostTE, nPostCN, nPostCD, countTG, countTE, countCN, countCD,postHeader1,postHeader2,postHeader3]) => {
+    ]).then(([postN, premiumPost,postM, nPostTG, nPostTE, nPostCN, nPostCD, countTG, countTE, countCN, countCD,postHeader1,postHeader2,postHeader3]) => {
+        console.log(date);
         res.render('dashboard', {
+            premiumPost,
             post: postN,
             postM: postM,
             postTG: nPostTG,
@@ -39,12 +41,42 @@ routes.get('/', (req, res, next) => {
             postCN: nPostCN,
             postCD: nPostCD,
             countTG, countTE, countCN, countCD,
-            postHeader1
+            postHeader1,postHeader2,postHeader3
         });
     }).catch(err => { next(err) });
 })
 
 routes.get('/post/:id', (req, res, next) => {
+    var date = new Date();
+    var date = date.toISOString();
+    var id = req.params.id;
+    Promise.all([
+        commentModel.getComment(id),
+        commentModel.getCountComment(id),
+        postModel.SingleID(id),
+    ]).then(([comment, countcm, post]) => {
+        var slviews = Number;
+        slviews = post.views + 1;
+        postModel.findByIdAndUpdate(id, { $set: { views: slviews } }, (callback) => { });
+        var iduser = post.idAuther;
+        var tagpost = post.tag;
+        Promise.all([userModel.getUserById(iduser), postModel.GetPostWithTagName(date, tagpost)]).then(([user, postlq]) => {
+            res.render('post', {
+                postlq,
+                post: post,
+                nameAuther: user.name,
+                commentsPost: comment,
+                totalComment: countcm
+            })
+        }).catch(error => res.json(error));
+    }).catch((err) => { res.json(err) });
+})
+routes.get('/premium', g_premiumRetricted,(req,res,next)=>{
+    postModel.find({ngayXuatBan: {$lte: {date}},duyet: true, premium: true},(err,post)=>{
+        res.render('premium',post);
+    }).sort({ngayDang: -1});
+})
+routes.get('/postPremium/:id',g_premiumRetricted, (req, res, next) => {
     var date = new Date();
     var date = date.toISOString();
     var id = req.params.id;
@@ -145,15 +177,12 @@ routes.get('/tags/:tagName', (req, res, next) => {
     }).catch()
 })
 
-routes.get('/demo', (req, res, next) => {
-    res.render('demo');
-})
-
-
 routes.get('/roleError', (req, res, next) => {
     res.render('roleError');
 })
-
+routes.get('/roleSubcrise', (req, res, next) => {
+    res.render('roleSubcrise');
+})
 routes.post('/comment', (req, res, next) => {
     var newComment = commentModel({
         idPost: req.body.id,

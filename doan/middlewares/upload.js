@@ -32,7 +32,8 @@ module.exports = function (app) {
         duyet: false,
         views: 0,
         ngayXuatBan: req.body.ngayDang,
-        editor: null
+        editor: null,
+        premium: false
       });
       postUser.addPost(newPost, (err, post) => {
         if (err) return res.json({ error: err.message });

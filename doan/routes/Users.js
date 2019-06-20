@@ -53,7 +53,7 @@ routes.get('/profile', restricted, (req, res, next) => {
     })
 })
 
-routes.post('/logout', (req, res, next) => {
+routes.post('/logout',restricted,(req, res, next) => {
     req.logOut();
     res.redirect('login');
 })
@@ -64,6 +64,13 @@ routes.get('/is-available', (req, res, next) => {
         if(docs) res.json(false);
         else res.json(true);
     })
-  })
+})
+
+routes.post('/editprofile',restricted,(req,res,next)=>{
+    var user = req.user;
+    Users.findByIdAndUpdate(user._id,{$set:{name: req.body.name, email: req.body.email}},(err,docs)=>{
+        res.redirect('/user/profile');
+    })
+})
 
 module.exports = routes;

@@ -9,6 +9,9 @@
           <a class="btn btn-info" href="/admin/adminControl/qltk">Quản lí tài khoản</a>
         </li>
         <li class="nav-item">
+          <a class="btn btn-info" href="/admin/adminControl/renewed">Gia hạn subcriber</a>
+        </li>
+        <li class="nav-item">
           <a class="btn btn-info" href="/admin/adminControl/qlbv">Duyệt bài</a>
         </li>
         <li class="nav-item">
@@ -16,9 +19,6 @@
         </li>
         <li class="nav-item">
           <a class="btn btn-info" href="/admin/adminControl/qleditor">Quản lí editor</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-info" href="/admin/adminControl/qleditor">Quản lí chuyên mục</a>
         </li>
       </ul>
     </div>
@@ -41,10 +41,14 @@
             <td>{{userNameEditor}}</td>
             <td>{{chuyenMucPTrach}}</td>
             <td>
-              <a href="/admin/adminControl/editCategoriesTinGame/{{userNameEditor}}" class="btn btn-outline-primary ">Tin Game</a>
-              <a href="/admin/adminControl/editCategoriesTinEsport/{{userNameEditor}}" class="btn btn-outline-success ">Tin Esport</a>
-              <a href="/admin/adminControl/editCategoriesCamNang/{{userNameEditor}}" class="btn btn-outline-secondary ">Cẩm nang</a>
-              <a href="/admin/adminControl/editCategoriesCongDong/{{userNameEditor}}" class="btn btn-outline-danger ">Cộng đồng</a>
+              <a href="/admin/adminControl/editCategoriesTinGame/{{userNameEditor}}"
+                class="btn btn-outline-primary ">Tin Game</a>
+              <a href="/admin/adminControl/editCategoriesTinEsport/{{userNameEditor}}"
+                class="btn btn-outline-success ">Tin Esport</a>
+              <a href="/admin/adminControl/editCategoriesCamNang/{{userNameEditor}}"
+                class="btn btn-outline-secondary ">Cẩm nang</a>
+              <a href="/admin/adminControl/editCategoriesCongDong/{{userNameEditor}}"
+                class="btn btn-outline-danger ">Cộng đồng</a>
             </td>
           </tr>
           {{/each}}
