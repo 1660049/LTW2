@@ -69,7 +69,7 @@
                 {{#each this.premiumPost}}
                 <div class="col-md-6">
                     <div class="post">
-                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
                                 alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                         <div class="post-body">
                             <div class="post-meta">
@@ -100,9 +100,12 @@
                 <div class="col-md-6">
                     <div class="post">
                         {{#if premium}}
-                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}" {{else}} <a class="post-img"
-                                href="/post/{{_id}}"><img src="{{img}}" {{/if}}
+                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
                                 alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{else}}
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{/if}}
                         <div class="post-body">
                             <div class="post-meta">
                                 <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
@@ -129,125 +132,151 @@
                 <div class="col-md-6">
                     <div class="post">
                         {{#if premium}}
-                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}" {{else}} <a class="post-img"
-                                href="/post/{{_id}}"><img src="{{img}}" {{/if}} <div class="post-body">
+                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{else}}
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{/if}}
+                        <div class="post-body">
                             <div class="post-meta">
                                 <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
                                 {{#if premium}}
                                 <a class="post-category cat-3" href="/premium/">Premium</a>
                                 {{/if}}
-                                <span class="post-date">{{h_dateformat this.ngayDang}}</span>
+                                <span class="post-date">{{h_dateformat ngayDang}}</span>
                             </div>
                             {{#if premium}}
                             <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
                             {{else}}
                             <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             {{/if}}
+                        </div>
                     </div>
                 </div>
-            </div>
-            {{/each}}
-            <div class="clearfix visible-md visible-lg"></div>
-            {{#each this.postTE}}
-            <div class="col-md-6">
-                <div class="post">
-                    {{#if premium}}
-                    <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}" {{else}} <a class="post-img"
-                            href="/post/{{_id}}"><img src="{{img}}" {{/if}} <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
-                            {{#if premium}}
-                            <a class="post-category cat-3" href="/premium/">Premium</a>
-                            {{/if}}
-                            <span class="post-date">{{h_dateformat this.ngayDang}}</span>
-                        </div>
+                {{/each}}
+                <div class="clearfix visible-md visible-lg"></div>
+                {{#each this.postTE}}
+                <div class="col-md-6">
+                    <div class="post">
                         {{#if premium}}
-                        <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
+                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                         {{else}}
-                        <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
                         {{/if}}
-                </div>
-            </div>
-            {{/each}}
-            {{#each this.postCN}}
-            <div class="col-md-6">
-                <div class="post">
-                    {{#if premium}}
-                    <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}" {{else}} <a class="post-img"
-                            href="/post/{{_id}}"><img src="{{img}}" {{/if}} <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                {{#if premium}}
+                                <a class="post-category cat-3" href="/premium/">Premium</a>
+                                {{/if}}
+                                <span class="post-date">{{h_dateformat ngayDang}}</span>
+                            </div>
                             {{#if premium}}
-                            <a class="post-category cat-3" href="/premium/">Premium</a>
+                            <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
+                            {{else}}
+                            <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             {{/if}}
-                            <span class="post-date">{{h_dateformat this.ngayDang}}</span>
                         </div>
-                        {{#if premium}}
-                        <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
-                        {{else}}
-                        <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
-                        {{/if}}
+                    </div>
                 </div>
-            </div>
-            {{/each}}
-            <div class="clearfix visible-md visible-lg"></div>
-            {{#each this.postCD}}
-            <div class="col-md-6">
-                <div class="post">
-                    {{#if premium}}
-                    <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}" {{else}} <a class="post-img"
-                            href="/post/{{_id}}"><img src="{{img}}" {{/if}} <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                {{/each}}
+                {{#each this.postCN}}
+                <div class="col-md-6">
+                    <div class="post">
+                        {{#if premium}}
+                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{else}}
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{/if}}
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                {{#if premium}}
+                                <a class="post-category cat-3" href="/premium/">Premium</a>
+                                {{/if}}
+                                <span class="post-date">{{h_dateformat ngayDang}}</span>
+                            </div>
                             {{#if premium}}
-                            <a class="post-category cat-3" href="/premium/">Premium</a>
+                            <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
+                            {{else}}
+                            <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                             {{/if}}
-                            <span class="post-date">{{h_dateformat this.ngayDang}}</span>
                         </div>
-                        {{#if premium}}
-                        <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
-                        {{else}}
-                        <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
-                        {{/if}}
+                    </div>
                 </div>
+                {{/each}}
+                <div class="clearfix visible-md visible-lg"></div>
+                {{#each this.postCD}}
+                <div class="col-md-6">
+                    <div class="post">
+                        {{#if premium}}
+                        <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{else}}
+                        <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
+                                alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                        {{/if}}
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-4" href="/categories/{{chuyenMuc}}">{{chuyenMuc}}</a>
+                                {{#if premium}}
+                                <a class="post-category cat-3" href="/premium/">Premium</a>
+                                {{/if}}
+                                <span class="post-date">{{h_dateformat ngayDang}}</span>
+                            </div>
+                            {{#if premium}}
+                            <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
+                            {{else}}
+                            <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                <div class="clearfix visible-md visible-lg"></div>
             </div>
-            {{/each}}
-            <div class="clearfix visible-md visible-lg"></div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="aside-widget">
-            <div class="section-title">
-                <h2>Đọc nhiều</h2>
-            </div>
-            {{#each this.postM}}
-            <div class="post post-widget">
-
-                {{#if premium}}
-                <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}" {{else}} <a class="post-img"
-                        href="/post/{{_id}}"><img src="{{img}}" {{/if}} <div class="post-body">
+        <div class="col-md-4">
+            <div class="aside-widget">
+                <div class="section-title">
+                    <h2>Đọc nhiều</h2>
+                </div>
+                {{#each this.postM}}
+                <div class="post post-widget">
+                    {{#if premium}}
+                    <a class="post-img" href="/postPremium/{{_id}}"><img src="{{img}}"
+                            alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                    {{else}}
+                    <a class="post-img" href="/post/{{_id}}"><img src="{{img}}"
+                            alt="/public/img/Wallpapers-Heo-Timt-2019 21.jpg"></a>
+                    {{/if}}
                     {{#if premium}}
                     <h3 class="post-title"><a href="/postPremium/{{_id}}">{{tieuDe}}</a></h3>
                     {{else}}
                     <h3 class="post-title"><a href="/post/{{_id}}">{{tieuDe}}</a></h3>
                     {{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="aside-widget">
+            <div class="section-title">
+                <h2>Catagories</h2>
+            </div>
+            <div class="category-widget">
+                <ul>
+                    <li><a href="/categories/Tin game" class="cat-1">Tin game<span>{{countTG}}</span></a></li>
+                    <li><a href="/categories/Tin Esport" class="cat-2">Tin esport<span>{{countTE}}</span></a></li>
+                    <li><a href="/categories/Cẩm nang" class="cat-4">Cẩm nang<span>{{countCN}}</span></a></li>
+                    <li><a href="/Categories/Cộng đồng" class="cat-3">Cộng đồng<span>{{countCD}}</span></a></li>
+                </ul>
             </div>
         </div>
-        {{/each}}
     </div>
-    <div class="aside-widget">
-        <div class="section-title">
-            <h2>Catagories</h2>
-        </div>
-        <div class="category-widget">
-            <ul>
-                <li><a href="/categories/Tin game" class="cat-1">Tin game<span>{{countTG}}</span></a></li>
-                <li><a href="/categories/Tin Esport" class="cat-2">Tin esport<span>{{countTE}}</span></a></li>
-                <li><a href="/categories/Cẩm nang" class="cat-4">Cẩm nang<span>{{countCN}}</span></a></li>
-                <li><a href="/Categories/Cộng đồng" class="cat-3">Cộng đồng<span>{{countCD}}</span></a></li>
-            </ul>
-        </div>
-    </div>
-</div>
 </div>
 </div>
