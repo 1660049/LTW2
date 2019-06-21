@@ -226,7 +226,8 @@ routes.get('/viewDetail/:id', adminRetricted, (req, res, next) => {
 routes.get('/approved/:id', adminRetricted, (req, res, next) => {
     var idPost = req.params.id;
     var name = req.user.userName
-    post.approvedPost(idPost, name).then((docs) => {
+    var date = new Date();
+    post.approvedPostDate(idPost, name, date).then((docs) => {
     }).catch(err => { throw err });
     res.redirect('/admin/adminControl/qlbv');
 })
